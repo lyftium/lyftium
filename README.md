@@ -63,7 +63,7 @@ The repo includes a Python package, a pytest suite, a reproducible pipeline and 
 | 🎯 **Training & fine-tuning** | PyTorch, LoRA / QLoRA with PEFT, DeepSpeed, GPU-constrained training (batch / accumulation / resolution tuning), YOLO fine-tuning |
 | 🤖 **Agentic AI** | Model Context Protocol (MCP) tool servers, LangGraph, Goose, multi-agent workflows, each tool server deployable as its own service |
 | 🔁 **MLOps** | MLflow tracking and registry, scheduled retraining, GitHub Actions CI, Prometheus / Grafana monitoring, data-quality checks |
-| 🛡️ **Responsible AI (EU AI Act-aware)** | Dataset and model documentation, data lineage and versioning, evaluation contracts on held-out data, human-in-the-loop approval, fail-closed release gates, audit trails |
+| 🛡️ **Model governance** | Dataset and model documentation, data lineage and versioning, evaluation contracts on held-out data, human-in-the-loop approval, fail-closed release gates, audit trails |
 
 ### 🛠️ Data science skills
 
