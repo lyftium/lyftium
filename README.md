@@ -30,7 +30,7 @@ The three importance-weighted estimators landed within 5.3–5.8% of the true CT
 
 Checking GD&T and ASME Y14.5 annotations on dense aerospace drawings by hand is slow and easy to get wrong. GOLLAMC combines a 17-class YOLO symbol detector, Donut OCR, and LLaVA-1.5-7B fine-tuned with LoRA and QLoRA, plus rule-based ASME checks. A LangGraph agent orchestrates them, exposed as 78 tools across three MCP servers, and everything runs locally.
 
-On a 38-drawing OEM holdout the detector reaches 74.0% mAP@50 and 69.2% F1. That's short of the 0.82 mAP target, so the model stays behind a release gate until it gets there. Much of the work went into the data: versioned, deduplicated label sets with dataset cards and evaluation contracts, so every number is reproducible.
+On a held-out test set of 38 drawings, the detector reaches 74.0% mAP@50 and 69.2% F1. That's short of the 0.82 mAP target, so the model stays behind a release gate until it gets there. Much of the work went into the data: versioned, deduplicated label sets with dataset cards and evaluation contracts, so every number is reproducible.
 
 **Smaller projects** *(private)*
 
