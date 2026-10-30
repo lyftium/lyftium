@@ -1,31 +1,40 @@
-<h1 align="center">LYFTIUM</h1>
-<h3 align="center">Data Scientist · ML Engineer · Aerospace AI</h3>
-<p align="center">📍 Paris, France · Experimentation & causal inference · Recommendation · Computer vision · Production ML</p>
+<h1 align="center">Hi, I'm lyftium 👋</h1>
+<p align="center"><b>Data Scientist</b> based in Paris, France</p>
 
 <p align="center">
   <a href="https://www.optinampout.com"><img src="https://img.shields.io/badge/Website-optinampout.com-0A66C2?style=for-the-badge" alt="Website: optinampout.com" /></a>
   <img src="https://img.shields.io/badge/Open_to-Data_Scientist_roles-2ea44f?style=for-the-badge" alt="Open to Data Scientist roles" />
 </p>
 
-<p align="center"><sub><i>Data scientist — de l'expérimentation à la mise en production.</i></sub></p>
+I like problems where the honest answer matters more than the impressive one. Most of my work sits between statistics and engineering: figuring out whether a model or a policy will actually work before it reaches users, and then shipping the ones that do as real services.
 
-## What I bring
+I've applied that to recommendation systems, computer vision for aerospace engineering drawings, and streaming data in fintech. Along the way I've learned to care as much about evaluation, data quality and reproducibility as about the model itself.
 
-- **Trustworthy decisions before the A/B test.** On 13.7M real bandit logs, my IPW, SNIPW and doubly robust estimates landed within **5.3–5.8%** of the true CTR, and every 95% bootstrap CI covered it. → [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation)
-- **Computer vision on real engineering data, measured honestly.** My aerospace drawing-symbol detector reached **74.0% mAP@50 and 69.2% F1** on a 38-drawing OEM holdout. That's below the 0.82 target, so a release gate keeps it out of production. → GOLLAMC
-- **Models that ship as services.** A FastAPI vision-language service (LlavaAero), 78 agent tools across 3 MCP servers (GOLLAMC), plus Docker, CI and MLflow-tracked retraining.
+## A few things I've built
 
-**Currently:** completing GOLLAMC, my final project for the Liora Data Scientist program (Mines Paris – PSL), and looking for a Data Scientist role in Paris.
+**[Off-policy evaluation of recommendation policies](https://github.com/lyftium/off-policy-bandit-evaluation)**
 
----
+Can you tell how a new recommender will perform without running an A/B test? I tested that on the public Open Bandit Dataset from ZOZOTOWN, which has 13.7M real logged rounds. I compared IPW, self-normalized IPW, doubly robust and direct-method estimators against the production policy's known click-through rate.
 
-## Toolkit
+The three importance-weighted estimators landed within 5.3–5.8% of the true CTR, and every 95% bootstrap interval covered it. The direct method looked precise but was biased, and its interval missed. A simple per-slot popularity policy beat the logging policy on held-out days (0.74% vs 0.36% CTR). The reward model only reached an AUC of 0.63, which explains why the simple policy won. Everything is a small, tested Python package you can rerun end to end.
 
-- **Statistics & experimentation:** A/B test design, causal inference, off-policy evaluation (IPW, SNIPW, doubly robust, direct method), bootstrap confidence intervals, rare-event (CTR) analysis, Monte Carlo simulation
-- **Modeling:** scikit-learn, gradient boosting, linear and logistic models, contextual bandits (LinUCB, Thompson sampling, ε-greedy), anomaly detection, leakage-free temporal splits
-- **CV, NLP & VLMs:** PyTorch, Hugging Face, YOLO detection, Donut OCR, LLaVA fine-tuning with LoRA / QLoRA, local LLMs (Ollama, vLLM), LLM agents (LangGraph, MCP)
-- **Data:** SQL, pandas, NumPy, PySpark, Kafka streaming, ClickHouse, Elasticsearch, data-quality checks, labeling pipelines
-- **Production:** Docker, Kubernetes, FastAPI, MLflow, GitHub Actions, Linux, Prometheus / Grafana, dataset cards and evaluation contracts
+**GOLLAMC: AI-assisted review of aerospace drawings** *(private, demo on request)*
+
+Checking GD&T and ASME Y14.5 annotations on dense aerospace drawings by hand is slow and easy to get wrong. GOLLAMC combines a 17-class YOLO symbol detector, Donut OCR, and LLaVA-1.5-7B fine-tuned with LoRA and QLoRA, plus rule-based ASME checks. A LangGraph agent orchestrates them, exposed as 78 tools across three MCP servers, and everything runs locally.
+
+On a 38-drawing OEM holdout the detector reaches 74.0% mAP@50 and 69.2% F1. That's short of the 0.82 mAP target, so the model stays behind a release gate until it gets there. Much of the work went into the data: versioned, deduplicated label sets with dataset cards and evaluation contracts, so every number is reproducible.
+
+**Smaller projects** *(private)*
+
+- **LlavaAero:** a FastAPI service that runs a LLaVA vision-language model over engineering drawings, with Docker, CI/CD and Prometheus/Grafana monitoring.
+- **Tolerance analyzer:** statistical tolerance stack-ups comparing worst-case, RSS and Monte Carlo methods.
+- **Real-time blockchain data platform:** Kafka to ClickHouse streaming, transaction labeling, anomaly detection, data-quality monitoring, and bandit-based decision models tracked in MLflow.
+
+## What I work with
+
+I'm strongest in **statistics and experimentation**: A/B test design, causal inference, off-policy evaluation, bootstrap intervals and Monte Carlo simulation. For **modeling** I use scikit-learn, gradient boosting, linear models and contextual bandits (LinUCB, Thompson sampling), and I'm careful about leakage-free temporal splits. On the **deep learning** side I work with PyTorch and Hugging Face: object detection, OCR, vision-language models with LoRA/QLoRA fine-tuning, local LLMs with Ollama and vLLM, and LLM agents with LangGraph and MCP.
+
+For **data** I'm comfortable with SQL, pandas, PySpark, Kafka, ClickHouse and Elasticsearch. To **ship** things I use Docker, Kubernetes, FastAPI, MLflow, GitHub Actions and Linux.
 
 <p>
   <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
@@ -40,27 +49,6 @@
   <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white" alt="Kubernetes" />
 </p>
 
----
+## Let's talk
 
-## Projects
-
-### [Off-policy evaluation of recommendation policies on 13.7M real bandit logs](https://github.com/lyftium/off-policy-bandit-evaluation)
-- **Problem:** can we know how a new recommender will perform *before* running an A/B test?
-- **Approach:** on the public Open Bandit Dataset (ZOZOTOWN: 1.37M uniform-random and 12.4M production rounds), I compared the IPW, SNIPW, doubly robust and direct-method estimators against the production policy's known CTR, using bootstrap CIs and held-out days.
-- **Result:** IPW, SNIPW and DR were within **5.3–5.8% relative error**, and every 95% CI covered the truth. The model-only direct method was precise but biased, and its CI missed. A per-slot popularity policy beat the logging policy on held-out days, **0.74% vs 0.36% CTR (~2.1×)**. The reward model's AUC was only 0.63, which explains why simple policies won.
-- **Stack:** Python package, pandas, NumPy, scikit-learn, pytest, reproducible pipeline, MIT license.
-
-### GOLLAMC: computer vision and LLM agents for aerospace drawing review *(private · demo on request)*
-- **Problem:** manual GD&T / ASME Y14.5 review of dense aerospace drawings is slow and error-prone.
-- **Approach:** a 17-class YOLO symbol detector, Donut OCR, LLaVA-1.5-7B fine-tuned with LoRA / QLoRA, and rule-based ASME validators. They're orchestrated by a LangGraph agent and exposed as **78 tools across 3 MCP servers**, all running locally. Versioned label-quality datasets (v6 → v27) come with dataset cards, evaluation contracts and deduplicated holdout evaluation.
-- **Result:** **74.0% mAP@50, 66.2% class-rollup and 69.2% F1** on a 38-drawing OEM holdout (v25), against a 0.82 mAP target. The platform ships, and the model release stays gated until it clears the target.
-- **Stack:** PyTorch, Hugging Face (Transformers, PEFT, bitsandbytes), YOLO, Ollama, LangGraph, MCP, Streamlit, Docker, pytest, GitHub Actions, Kaggle GPUs.
-
-### More
-- **LlavaAero** *(private)*: a FastAPI service that runs a LLaVA vision-language model over aerospace drawings to extract design characteristics, with Docker, CI/CD and Prometheus / Grafana monitoring.
-- **Tolerance analyzer** *(private)*: statistical tolerance stack-up analysis in Jupyter, comparing worst-case, RSS and Monte Carlo methods.
-- **Real-time blockchain data platform** *(private)*: Kafka → ClickHouse streaming, transaction labeling, anomaly detection, data-quality monitoring and bandit-based decision models tracked in MLflow.
-
----
-
-<p align="center"><b>Hiring a data scientist in Paris?</b> Reach me through <a href="https://www.optinampout.com">optinampout.com</a>.</p>
+I'm looking for a data scientist role in Paris. If you're hiring, or just want to talk about evaluation, recommendation or computer vision, you can reach me through [optinampout.com](https://www.optinampout.com).
