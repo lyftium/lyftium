@@ -8,7 +8,15 @@
 
 I like problems where the honest answer matters more than the impressive one. Most of my work sits between statistics and engineering: figuring out whether a model or a policy will actually work before it reaches users, and then shipping the ones that do as real services.
 
-I've applied that to recommendation systems, computer vision for aerospace engineering drawings, and streaming data in fintech. Along the way I've learned to care as much about evaluation, data quality and reproducibility as about the model itself.
+I come from aerospace engineering, and a lot of what I do now is translating that background into AI tools engineers can actually rely on. I've applied it to computer vision for engineering drawings, recommendation systems, and streaming data in fintech. Along the way I've learned to care as much about evaluation, data quality and reproducibility as about the model itself.
+
+## From AI prototype to production service
+
+A model that works in a notebook is maybe a third of the job. The rest is making it deployable, measurable, secure and boring to operate. These two public repos are where I show that part.
+
+**[drawing-review-service](https://github.com/lyftium/drawing-review-service)** takes the drawing-review idea behind GOLLAMC and packages it the way I'd want to run it in production: a FastAPI service with strict input validation, a containerised image that runs as non-root, Kubernetes manifests (kustomize overlays for a local kind cluster and for GPU nodes, a separate vLLM deployment for the vision-language model), Prometheus metrics and alerts, and a golden regression set that gates releases. The evaluation harness scores extraction and business correctness separately, because a model can read every symbol right and still miss the defect that matters. It runs end to end on a laptop with a stub backend; the README is explicit about what is tested and what is still a proposal.
+
+**[lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe)** is a small LoRA / QLoRA fine-tuning recipe with a baseline-vs-adapter evaluation on the same held-out set and a run record (git sha, config and data hashes, library versions) for every run. On a synthetic annotation-to-JSON task, a LoRA adapter on Qwen2.5-0.5B, trained on CPU, took exact match from 0% to 97% on 100 held-out examples. The README is upfront that this baseline is unprompted, so the gap is flattered, and that the QLoRA config hasn't been run on a GPU yet.
 
 ## A few things I've built
 
@@ -49,6 +57,10 @@ For **data** I'm comfortable with SQL, pandas, PySpark, Kafka, ClickHouse and El
   <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white" alt="Kubernetes" />
 </p>
 
+## Education
+
+**Data Scientist program, Liora with Mines Paris – PSL.** GOLLAMC was my final project.
+
 ## Let's talk
 
-I'm looking for a data scientist role in Paris. If you're hiring, or just want to talk about evaluation, recommendation or computer vision, you can reach me through [optinampout.com](https://www.optinampout.com).
+I'm looking for a data scientist role in Paris. If you're hiring, or just want to talk about evaluation, computer vision or getting models into production, you can reach me through [optinampout.com](https://www.optinampout.com).
