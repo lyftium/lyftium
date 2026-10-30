@@ -3,9 +3,9 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=58A6FF&center=true&vCenter=true&width=560&lines=Aerospace+engineer+turned+data+scientist;Python+%C2%B7+SQL+%C2%B7+PyTorch+%C2%B7+LLMs;ML+models+to+production+with+Kubernetes+%2B+vLLM" />
-    <source media="(prefers-color-scheme: light)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=0969DA&center=true&vCenter=true&width=560&lines=Aerospace+engineer+turned+data+scientist;Python+%C2%B7+SQL+%C2%B7+PyTorch+%C2%B7+LLMs;ML+models+to+production+with+Kubernetes+%2B+vLLM" />
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=0969DA&center=true&vCenter=true&width=560&lines=Aerospace+engineer+turned+data+scientist;Python+%C2%B7+SQL+%C2%B7+PyTorch+%C2%B7+LLMs;ML+models+to+production+with+Kubernetes+%2B+vLLM" alt="Aerospace engineer turned data scientist. Python, SQL, PyTorch, LLMs. ML models to production with Kubernetes + vLLM." />
+    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=58A6FF&center=true&vCenter=true&width=560&lines=Data+scientist+%C2%B7+experiments+%C2%B7+honest+evaluation;Python+%C2%B7+SQL+%C2%B7+PyTorch+%C2%B7+LLMs;ML+models+to+production+with+Kubernetes+%2B+vLLM" />
+    <source media="(prefers-color-scheme: light)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=0969DA&center=true&vCenter=true&width=560&lines=Data+scientist+%C2%B7+experiments+%C2%B7+honest+evaluation;Python+%C2%B7+SQL+%C2%B7+PyTorch+%C2%B7+LLMs;ML+models+to+production+with+Kubernetes+%2B+vLLM" />
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=0969DA&center=true&vCenter=true&width=560&lines=Data+scientist+%C2%B7+experiments+%C2%B7+honest+evaluation;Python+%C2%B7+SQL+%C2%B7+PyTorch+%C2%B7+LLMs;ML+models+to+production+with+Kubernetes+%2B+vLLM" alt="Data scientist: experiments and honest evaluation. Python, SQL, PyTorch, LLMs. ML models to production with Kubernetes + vLLM." />
   </picture>
 </p>
 
@@ -19,8 +19,6 @@
 </p>
 
 I build ML models, test them against honest baselines, and ship the ones that hold up as real services.
-
-Before data science I was an aerospace engineer on A220 cabin interiors: design, technical drawings, validation and certification. That's where I learned to want evidence before sign-off.
 
 **What I bring to a team**
 - **End to end:** from problem framing and data to a model served behind an API, with monitoring.
