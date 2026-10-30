@@ -1,8 +1,12 @@
 <h1 align="center">Hi, I'm lyftium 👋</h1>
-<p align="center"><b>Data Scientist · Paris, France</b></p>
+<p align="center"><b>Data Scientist · ML Engineer · Paris, France</b> · 🇫🇷 French &amp; English</p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=326CE5&center=true&vCenter=true&width=560&lines=Aerospace+engineer+turned+data+scientist;Honest+evaluation+before+anything+ships;ML+models+to+production+with+Kubernetes+%2B+vLLM" alt="Aerospace engineer turned data scientist. Honest evaluation before anything ships. ML models to production with Kubernetes + vLLM." />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=58A6FF&center=true&vCenter=true&width=560&lines=Aerospace+engineer+turned+data+scientist;Python+%C2%B7+SQL+%C2%B7+PyTorch+%C2%B7+LLMs;ML+models+to+production+with+Kubernetes+%2B+vLLM" />
+    <source media="(prefers-color-scheme: light)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=0969DA&center=true&vCenter=true&width=560&lines=Aerospace+engineer+turned+data+scientist;Python+%C2%B7+SQL+%C2%B7+PyTorch+%C2%B7+LLMs;ML+models+to+production+with+Kubernetes+%2B+vLLM" />
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=0969DA&center=true&vCenter=true&width=560&lines=Aerospace+engineer+turned+data+scientist;Python+%C2%B7+SQL+%C2%B7+PyTorch+%C2%B7+LLMs;ML+models+to+production+with+Kubernetes+%2B+vLLM" alt="Aerospace engineer turned data scientist. Python, SQL, PyTorch, LLMs. ML models to production with Kubernetes + vLLM." />
+  </picture>
 </p>
 
 <p align="center">
@@ -16,13 +20,23 @@
 
 I build ML models, test them against honest baselines, and ship the ones that hold up as real services.
 
-Before data science I was an aerospace engineer on A220 cabin interiors: design, technical drawings, validation and certification. That's where I learned to want evidence before sign-off, and it's how I treat models today.
+Before data science I was an aerospace engineer on A220 cabin interiors: design, technical drawings, validation and certification. That's where I learned to want evidence before sign-off.
+
+**What I bring to a team**
+- **End to end:** from problem framing and data to a model served behind an API, with monitoring.
+- **Rigorous evaluation:** baselines, held-out tests, and regression sets that gate releases.
+- **LLMs and computer vision in production:** fine-tuning, agents, and GPU serving with vLLM on Kubernetes.
 
 ## Selected work
 
 - **[off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation)**: estimating a recommender's click-through rate without running an A/B test. On 13.7M real logged rounds, the importance-weighted estimators landed within 6% of the true CTR.
 - **GOLLAMC** *(private, demo on request)*: AI review of engineering drawings. YOLO symbol detection, OCR and a LoRA-tuned LLaVA, orchestrated by a LangGraph agent, fully local. 74% mAP@50 and 69.2% F1 on 38 held-out drawings.
 - **[drawing-review-service](https://github.com/lyftium/drawing-review-service)**: taking a prototype like that to production. FastAPI, Docker, Kubernetes manifests for GPU nodes, vLLM serving, Prometheus metrics, and a regression set that gates each release.
+
+```mermaid
+flowchart LR
+  A[Drawing] --> B[YOLO detection] --> C[OCR] --> D[LLaVA on vLLM] --> E[Rule checks] --> F[Engineer review]
+```
 - **[lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe)**: LoRA fine-tuning with a baseline-vs-adapter evaluation. Exact match went from 0% to 97% on a synthetic task.
 
 ## Tech stack
@@ -63,10 +77,11 @@ Before data science I was an aerospace engineer on A220 cabin interiors: design,
 <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
 
 <details>
-<summary><b>Methods I use</b></summary>
+<summary><b>Methods I use</b> (statistics, experimentation, modeling)</summary>
 
 - **Stats & experimentation:** A/B testing, causal inference, off-policy evaluation, bootstrap
-- **Modeling:** gradient boosting, contextual bandits, computer vision, vision-language models, LoRA/QLoRA fine-tuning
+- **Modeling:** feature engineering, gradient boosting, contextual bandits, computer vision, vision-language models, LoRA/QLoRA fine-tuning
+- **GenAI:** LLM agents (LangGraph), fine-tuning, evaluation of LLM outputs
 
 </details>
 
