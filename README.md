@@ -89,4 +89,4 @@ Data Scientist program, Liora with Mines Paris – PSL
 
 ---
 
-<p align="center">Hiring for a data role in Paris? I'd be glad to talk. Reach me through <a href="https://www.optinampout.com">optinampout.com</a>.</p>
+<p align="center">Hiring for a data role in Paris? I'd be glad to talk. Reach me through contact@lyftium.com<a
