@@ -89,7 +89,7 @@ Domain of the synthetic task: drawing annotations → structured JSON (engineeri
 
 **Deepening next on a live cluster:** OpenShift AI Training Operator submit · serving SLOs from measured TTFT/p95 · central audit store for lineage / process owners
 
-## Education
+## Application pack\n\nCandidature / grille entretien (FR): [APPLICATION.md](./APPLICATION.md)\n\n## Education
 
 Data Scientist program, Liora with Mines Paris – PSL
 
