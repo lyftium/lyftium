@@ -35,11 +35,11 @@ That is the work I want to do next — industrialising AI components on a shared
 | **LLM inference (vLLM) + gateway thinking** | vLLM Deployment manifests (tensor parallel); proposed AI gateway (auth, quotas, routing) in `docs/gateway.md` |
 | **Fine-tuning with honest eval** | Baseline-vs-adapter loop, held-out set, run lineage; exact match 0% → 97% on a synthetic annotation→JSON task |
 | **Agentic pipelines as services** | LangGraph-style orchestration in private GOLLAMC; public rebuild keeps stages as pluggable backends behind one API |
-| **MLOps / traceability (AI Act direction)** | Per-run lineage (git sha, backend versions, config hash, dataset hash), eval Job + release gates, Prometheus metrics — not a full AI Act programme, but the audit spine |
+| **MLOps / regulatory direction** | Lineage + eval gates + HITL + Prometheus; engineering mapping in drawing-review docs/ai-act-mapping.md (checklist, not a legal claim) |
 | **Engineering / simulation AI (plus)** | Technical-drawing review (GD&T / aerospace-style checks), private GOLLAMC / LlavaAero CAD-VLM work, ENOVIA Smarteam PLM MCP (private) |
 | **Kubernetes** | Validated manifests (`kubeconform`), kind local path, GPU node selector / `nvidia.com/gpu` |
-| **OpenShift** | Manifests written to be UID-flexible / restricted PSS; **OpenShift Routes / OpenShift AI serving not hands-on yet** — next skill to deepen |
-| **Multi-GPU distributed training** | Serving-side tensor-parallel vLLM manifests; **multi-GPU training at cluster scale not yet demonstrated publicly** |
+| **OpenShift** | Overlay with **Route** + restricted-SCC UID patch + docs (`drawing-review-service/deploy/openshift`); live CRC/OpenShift AI submit still to deepen |
+| **Distributed training (DDP)** | `torchrun` DDP in lora-finetune-recipe (CPU gloo proven; CUDA nccl); `PyTorchJob` YAML for OpenShift AI / Training Operator |
 
 ## Selected public work
 
@@ -87,7 +87,7 @@ Domain of the synthetic task: drawing annotations → structured JSON (engineeri
 
 **Practices:** run lineage · eval harnesses · regression gates · restricted container security defaults  
 
-**Learning next for this role:** OpenShift (Routes, SCC, OpenShift AI model serving) · multi-GPU distributed training on a shared cluster · formal AI Act / EASA traceability mapping on top of existing lineage
+**Deepening next on a live cluster:** OpenShift AI Training Operator submit · serving SLOs from measured TTFT/p95 · central audit store for lineage / process owners
 
 ## Education
 
