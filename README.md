@@ -1,8 +1,8 @@
 <h1 align="center">lyftium</h1>
 <p align="center">
-  <b>AI component integrator · MLOps · GPU inference</b><br/>
+    <b>AI Engineer · MLOps · GPU inference</b><br/>
   Packaging models as services · Kubernetes · vLLM · engineering &amp; simulation AI<br/>
-  Île-de-France (Paris / Châteaufort area) · 🇫🇷 French &amp; English
+ · 🇫🇷 French &amp; English
 </p>
 
 <p align="center">
