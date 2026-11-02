@@ -1,33 +1,38 @@
 # lyftium
 
-ML / software in Paris. I mostly work on taking models out of notebooks and into services that other people can actually run: APIs, containers, GPU serving, and evaluation that is not optional.
+Paris · French & English
 
-French and English.
+I turn vision and language models into services other engineers can run: APIs, containers, GPU inference, evaluation gates, and enough lineage that a result can be traced back to code, config, and data.
 
-**contact@lyftium.com** · [optinampout.com](https://www.optinampout.com)
+---
 
-## Projects
+## Selected work
 
-### [drawing-review-service](https://github.com/lyftium/drawing-review-service)
+1. **[drawing-review-service](https://github.com/lyftium/drawing-review-service)** — *Drawing review as a service: detect → OCR → VLM (vLLM) → rules → human review; FastAPI, Docker, Kubernetes / OpenShift, Prometheus, eval gates, lineage.*
 
-Turned a drawing-review prototype into a small production-shaped service: detect, OCR, vision-language model on vLLM, rule checks, then human review. FastAPI, Docker, Kubernetes (plus an OpenShift overlay), Prometheus, release gates, run lineage.
+2. **[lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe)** — *LoRA / QLoRA with a baseline first: train adapter, score the same held-out set, write a run record (git / config / data hashes); CPU smoke path and `torchrun` DDP.*
 
-Public repo uses stub backends so it runs without GPUs. The real stack is wired the same way.
+3. **CAD / drawing agents & PLM tooling** *(private)* — *Same integration habits around engineering drawings and product systems; walkthrough on request.*
 
-### [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe)
+---
 
-A short LoRA / QLoRA loop I can re-run: baseline, train adapter, score on the same held-out set, write a report with git sha and config/data hashes. CPU smoke path, plus multi-process DDP via torchrun.
+## Stack
 
-### Other work (private, happy to walk through)
+```
+Languages   Python · shell · SQL
+ML          PyTorch · Hugging Face · PEFT (LoRA / QLoRA)
+Serving     FastAPI · vLLM
+Platform    Docker · Kubernetes · OpenShift · Prometheus · GitHub Actions
+```
 
-- Local CAD / drawing agents for engineering workflows
-- PLM-side tooling
-- Occasional data and infra work
+---
 
-## Tools I reach for
+## Background
 
-Python, PyTorch, Hugging Face, FastAPI, Docker, Kubernetes, Linux, vLLM, Prometheus, GitHub Actions.
+Data Scientist program, Liora with Mines Paris – PSL.
 
-## Education
+---
 
-Data Scientist program, Liora with Mines Paris – PSL
+## Contact
+
+[contact@lyftium.com](mailto:contact@lyftium.com) · [optinampout.com](https://www.optinampout.com)
