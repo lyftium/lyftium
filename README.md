@@ -1,87 +1,93 @@
-<h1 align="center">Hi, I'm lyftium 👋</h1>
-<p align="center"><b>Data Scientist · ML Engineer · Paris, France</b> · 🇫🇷 French &amp; English</p>
+<h1 align="center">lyftium</h1>
+<p align="center">
+  <b>AI component integrator · MLOps · GPU inference</b><br/>
+  Packaging models as services · Kubernetes · vLLM · engineering &amp; simulation AI<br/>
+  Île-de-France (Paris / Châteaufort area) · 🇫🇷 French &amp; English
+</p>
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=58A6FF&center=true&vCenter=true&width=560&lines=Data+scientist+%C2%B7+experiments+%C2%B7+honest+evaluation;Python+%C2%B7+SQL+%C2%B7+PyTorch+%C2%B7+LLMs;ML+models+to+production+with+Kubernetes+%2B+vLLM" />
-    <source media="(prefers-color-scheme: light)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=0969DA&center=true&vCenter=true&width=560&lines=Data+scientist+%C2%B7+experiments+%C2%B7+honest+evaluation;Python+%C2%B7+SQL+%C2%B7+PyTorch+%C2%B7+LLMs;ML+models+to+production+with+Kubernetes+%2B+vLLM" />
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1200&color=0969DA&center=true&vCenter=true&width=560&lines=Data+scientist+%C2%B7+experiments+%C2%B7+honest+evaluation;Python+%C2%B7+SQL+%C2%B7+PyTorch+%C2%B7+LLMs;ML+models+to+production+with+Kubernetes+%2B+vLLM" alt="Data scientist: experiments and honest evaluation. Python, SQL, PyTorch, LLMs. ML models to production with Kubernetes + vLLM." />
+    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=18&pause=1200&color=58A6FF&center=true&vCenter=true&width=620&lines=Industrialize+AI+components+into+microservices;Kubernetes+%2B+vLLM+GPU+serving+%2B+eval+gates;Engineering+drawings+%C2%B7+LoRA+%C2%B7+agentic+pipelines" />
+    <source media="(prefers-color-scheme: light)" srcset="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=18&pause=1200&color=0969DA&center=true&vCenter=true&width=620&lines=Industrialize+AI+components+into+microservices;Kubernetes+%2B+vLLM+GPU+serving+%2B+eval+gates;Engineering+drawings+%C2%B7+LoRA+%C2%B7+agentic+pipelines" />
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=18&pause=1200&color=0969DA&center=true&vCenter=true&width=620&lines=Industrialize+AI+components+into+microservices;Kubernetes+%2B+vLLM+GPU+serving+%2B+eval+gates;Engineering+drawings+%C2%B7+LoRA+%C2%B7+agentic+pipelines" alt="Industrialize AI components into microservices. Kubernetes, vLLM GPU serving, eval gates. Engineering drawings, LoRA, agentic pipelines." />
   </picture>
 </p>
 
 <p align="center">
-  <a href="https://www.optinampout.com"><img src="https://img.shields.io/badge/Website-optinampout.com-0A66C2?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Website" /></a>
-  <img src="https://img.shields.io/badge/Open_to-Data_Scientist_roles-2ea44f?style=for-the-badge" alt="Open to data scientist roles" />
+  <a href="mailto:contact@lyftium.com"><img src="https://img.shields.io/badge/Email-contact%40lyftium.com-0A66C2?style=for-the-badge&logo=maildotru&logoColor=white" alt="Email" /></a>
+  <img src="https://img.shields.io/badge/Open_to-AI_integrator_%2F_MLOps_(aerospace)-2ea44f?style=for-the-badge" alt="Open to AI integrator / MLOps roles in aerospace" />
 </p>
 
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=py,pytorch,sklearn,opencv,docker,kubernetes,fastapi,githubactions,prometheus,linux" alt="Python, PyTorch, scikit-learn, OpenCV, Docker, Kubernetes, FastAPI, GitHub Actions, Prometheus, Linux" />
+  <img src="https://skillicons.dev/icons?i=py,pytorch,docker,kubernetes,linux,fastapi,githubactions,prometheus" alt="Python, PyTorch, Docker, Kubernetes, Linux, FastAPI, GitHub Actions, Prometheus" />
 </p>
 
-I build ML models, test them against honest baselines, and ship the ones that hold up as real services.
+I take AI prototypes (detection, VLMs, LoRA adapters, agents) and turn them into **deployable components**: refactored Python services, Docker images, Kubernetes manifests for GPU nodes, evaluation gates, and run lineage so a result can be traced back to code, model, data and config.
 
-**What I bring to a team**
-- **End to end:** from problem framing and data to a model served behind an API, with monitoring.
-- **Rigorous evaluation:** baselines, held-out tests, and regression sets that gate releases.
-- **LLMs and computer vision in production:** fine-tuning, agents, and GPU serving with vLLM on Kubernetes.
+That is the work I want to do next — industrialising AI components on a shared compute cluster for engineering and simulation teams.
 
-## Selected work
+## Fit for an AI compute / integrator role
 
-- **[off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation)**: estimating a recommender's click-through rate without running an A/B test. On 13.7M real logged rounds, the importance-weighted estimators landed within 6% of the true CTR.
-- **GOLLAMC** *(private, demo on request)*: AI review of engineering drawings. YOLO symbol detection, OCR and a LoRA-tuned LLaVA, orchestrated by a LangGraph agent, fully local. 74% mAP@50 and 69.2% F1 on 38 held-out drawings.
-- **[drawing-review-service](https://github.com/lyftium/drawing-review-service)**: taking a prototype like that to production. FastAPI, Docker, Kubernetes manifests for GPU nodes, vLLM serving, Prometheus metrics, and a regression set that gates each release.
+| Need | Evidence |
+|---|---|
+| **Python + PyTorch / Hugging Face** | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) (PEFT LoRA/QLoRA, transformers); CV + VLM stack in drawing review |
+| **Package as microservices & deploy** | [drawing-review-service](https://github.com/lyftium/drawing-review-service): FastAPI service, multi-stage Docker, K8s probes, NetworkPolicy, PDB, GPU overlay |
+| **LLM inference (vLLM) + gateway thinking** | vLLM Deployment manifests (tensor parallel); proposed AI gateway (auth, quotas, routing) in `docs/gateway.md` |
+| **Fine-tuning with honest eval** | Baseline-vs-adapter loop, held-out set, run lineage; exact match 0% → 97% on a synthetic annotation→JSON task |
+| **Agentic pipelines as services** | LangGraph-style orchestration in private GOLLAMC; public rebuild keeps stages as pluggable backends behind one API |
+| **MLOps / traceability (AI Act direction)** | Per-run lineage (git sha, backend versions, config hash, dataset hash), eval Job + release gates, Prometheus metrics — not a full AI Act programme, but the audit spine |
+| **Engineering / simulation AI (plus)** | Technical-drawing review (GD&T / aerospace-style checks), private GOLLAMC / LlavaAero CAD-VLM work, ENOVIA Smarteam PLM MCP (private) |
+| **Kubernetes** | Validated manifests (`kubeconform`), kind local path, GPU node selector / `nvidia.com/gpu` |
+| **OpenShift** | Manifests written to be UID-flexible / restricted PSS; **OpenShift Routes / OpenShift AI serving not hands-on yet** — next skill to deepen |
+| **Multi-GPU distributed training** | Serving-side tensor-parallel vLLM manifests; **multi-GPU training at cluster scale not yet demonstrated publicly** |
+
+## Selected public work
+
+### 1. [drawing-review-service](https://github.com/lyftium/drawing-review-service) — industrialise a prototype
+
+Public rebuild of a private engineering-drawing review pipeline (GOLLAMC). Stub backends so CI runs without GPUs; real path is YOLO → OCR → LLaVA on **vLLM**, then rule checks, then engineer review.
 
 ```mermaid
 flowchart LR
-  A[Drawing] --> B[YOLO detection] --> C[OCR] --> D[LLaVA on vLLM] --> E[Rule checks] --> F[Engineer review]
+  A[Drawing] --> B[Detect] --> C[OCR] --> D[VLM on vLLM] --> E[Rule checks] --> F[Engineer review]
+  D -.-> G[GPU K8s / vLLM]
+  F -.-> H[Lineage + Prometheus + eval gates]
 ```
-- **[lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe)**: LoRA fine-tuning with a baseline-vs-adapter evaluation. Exact match went from 0% to 97% on a synthetic task.
 
-## Tech stack
+- Refactor into modules (pipeline / backends / API / evaluation / lineage)
+- Docker + Kubernetes (CPU path exercised; GPU/vLLM manifests validated, weights not in public repo)
+- Evaluation split: extraction quality vs business defect recall
+- Docs on MLOps release path and a proposed AI gateway in front of the service
 
-**Languages**
+### 2. [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) — fine-tune, measure, reproduce
 
-<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-<img src="https://img.shields.io/badge/SQL-336791?style=for-the-badge&logo=postgresql&logoColor=white" alt="SQL" />
+One command: evaluate base → train LoRA/QLoRA → evaluate adapter on the **same** held-out set → write report + run record (git sha, config/data hashes, versions). CPU smoke test in CI.
 
-**ML, DL & LLMs**
+Domain of the synthetic task: drawing annotations → structured JSON (engineering format), so fine-tuning is justified and scoring is unambiguous.
 
-<img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch" />
-<img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white" alt="scikit--learn" />
-<img src="https://img.shields.io/badge/Hugging_Face-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black" alt="Hugging Face" />
-<img src="https://img.shields.io/badge/YOLO_(Ultralytics)-111F68?style=for-the-badge&logo=ultralytics&logoColor=white" alt="YOLO (Ultralytics)" />
-<img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white" alt="OpenCV" />
-<img src="https://img.shields.io/badge/LangGraph-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white" alt="LangGraph" />
-<img src="https://img.shields.io/badge/vLLM-30A2FF?style=for-the-badge" alt="vLLM" />
-<img src="https://img.shields.io/badge/LoRA%2FQLoRA_(PEFT)-FF6F00?style=for-the-badge" alt="LoRA/QLoRA (PEFT)" />
+### 3. Private aerospace / PLM work *(demo on request)*
 
-**Data**
+- **GOLLAMC**: local agentic aerospace CAD / drawing review (YOLO, OCR, LoRA-tuned LLaVA, LangGraph)
+- **LlavaAero**: 2D & CAD drafting agent with a vision-language model
+- **smarteam-mcp-server**: MCP integration toward ENOVIA Smarteam PLM
+- Measured prototype metrics on held-out drawings (e.g. ~74% mAP@50, ~69% F1) — ask for a walkthrough
 
-<img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="pandas" />
-<img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white" alt="NumPy" />
-<img src="https://img.shields.io/badge/PySpark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white" alt="PySpark" />
-<img src="https://img.shields.io/badge/Kafka-231F20?style=for-the-badge&logo=apachekafka&logoColor=white" alt="Kafka" />
-<img src="https://img.shields.io/badge/ClickHouse-FFCC01?style=for-the-badge&logo=clickhouse&logoColor=black" alt="ClickHouse" />
+## How I work with other teams
 
-**MLOps & Infra**
+- Translate a research or business prototype into a **service contract** (schemas, env config, health, metrics)
+- Keep **evaluation and release gates** separate from unit tests so model quality cannot silently regress
+- Prefer pragmatic packaging (Docker, K8s, Linux shell) over one-off notebooks
+- Write short design notes (gateway, MLOps path) that architects and ops can review
 
-<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
-<img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Kubernetes" />
-<img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" />
-<img src="https://img.shields.io/badge/MLflow-0194E2?style=for-the-badge&logo=mlflow&logoColor=white" alt="MLflow" />
-<img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions" />
-<img src="https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white" alt="Prometheus" />
-<img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux" />
-<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
+## Stack I use day to day
 
-<details>
-<summary><b>Methods I use</b> (statistics, experimentation, modeling)</summary>
+**Core:** Python · PyTorch · Hugging Face (transformers / PEFT) · FastAPI · Docker · Kubernetes · Linux · GitHub Actions · Prometheus  
 
-- **Stats & experimentation:** A/B testing, causal inference, off-policy evaluation, bootstrap
-- **Modeling:** feature engineering, gradient boosting, contextual bandits, computer vision, vision-language models, LoRA/QLoRA fine-tuning
-- **GenAI:** LLM agents (LangGraph), fine-tuning, evaluation of LLM outputs
+**AI serving & agents:** vLLM · LoRA / QLoRA · LangGraph-style agents · OpenCV / YOLO  
 
-</details>
+**Practices:** run lineage · eval harnesses · regression gates · restricted container security defaults  
+
+**Learning next for this role:** OpenShift (Routes, SCC, OpenShift AI model serving) · multi-GPU distributed training on a shared cluster · formal AI Act / EASA traceability mapping on top of existing lineage
 
 ## Education
 
@@ -89,4 +95,7 @@ Data Scientist program, Liora with Mines Paris – PSL
 
 ---
 
-<p align="center">Hiring for a data role in Paris? I'd be glad to talk. Reach me through contact@lyftium.com<a
+<p align="center">
+  Targeting <b>AI component integration / MLOps</b> on industrial GPU clusters (aerospace welcome).<br/>
+  Reach me at <a href="mailto:contact@lyftium.com">contact@lyftium.com</a>
+</p>
