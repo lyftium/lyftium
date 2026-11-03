@@ -82,12 +82,30 @@ flowchart LR
 
 </div>
 
+**Inference measurements.** The serving levers behind those manifests were measured on GPU in a public notebook, [vLLM Serving Benchmark on T4](https://www.kaggle.com/code/lyftium/vllm-serving-benchmark-t4): vLLM 0.6.6 on two Tesla T4s (no bf16, so fp16), Qwen2.5 0.5B / 1.5B, every figure read from the run's `results.json`, one run per configuration.
+
+<div align="center">
+<sub><b>Table 2.</b> What each vLLM setting changed on a T4.</sub>
+
+| Lever | Measurement | Result |
+|:--|:--|:--|
+| Continuous batching | 0.5B fp16, generated tokens/s, `max_num_seqs` 1 → 128 | 145 → 5 126 (35×) |
+| Online serving | 0.5B fp16 streaming, concurrency 1 → 32 | 141 → 2 536 tok/s; TTFT p50 39 → 148 ms; inter-token p50 6.9 → 11.3 ms; 0 errors |
+| AWQ 4-bit vs fp16 | 1.5B, tokens/s at 1 / 128 sequences | 1.61× faster / 0.50× slower; weights 2.89 → 1.10 GiB |
+| AWQ quality | exact match on 50 checks (0.5B / 1.5B) | 0.92 → 0.72 / 0.98 → 0.94 |
+| Tensor parallel 2 vs 1 | 0.5B, 128 sequences | 0.86× (all-reduce over PCIe costs more than it saves at this size) |
+| Prefix caching | ~1k-token shared system prompt, 128 requests | 14.3 → 23.0 req/s (1.61×) |
+
+</div>
+
+The practical reading: on this hardware, batching is the lever that matters; AWQ helps single-stream latency and memory but costs throughput under load and accuracy on the small model; tensor parallelism is for models that do not fit on one GPU, not for speed.
+
 ## 3. Fine-tuning and distributed training
 
 **[lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe)** runs one loop: evaluate the base model → train a LoRA / QLoRA adapter → evaluate on the **same** held-out set → write a report and a run record. The task maps drawing annotations to structured JSON, so scoring is exact.
 
 <div align="center">
-<sub><b>Table 2.</b> Qwen2.5-0.5B on the held-out set (from <code>results/qwen-0.5b-lora/</code>).</sub>
+<sub><b>Table 3.</b> Qwen2.5-0.5B on the held-out set (from <code>results/qwen-0.5b-lora/</code>).</sub>
 
 | | Base model | + LoRA adapter |
 |:--|:--:|:--:|
@@ -98,7 +116,7 @@ flowchart LR
 
 </div>
 
-The base model never saw the target schema, so Table 2 measures what the adapter adds over an unprompted model; a prompted baseline is the next comparison[^1].
+The base model never saw the target schema, so Table 3 measures what the adapter adds over an unprompted model; a prompted baseline is the next comparison[^1].
 
 **Distributed path.** The same entry point runs under `torchrun` with `DistributedDataParallel` (gloo on CPU, NCCL on CUDA): one process group, data sharded by rank, gradients all-reduced, rank 0 saves. A two-process run is recorded in `results/tiny-ddp/`; it proves the mechanics on a tiny model, not convergence at scale. A Training Operator `PyTorchJob` for an OpenShift cluster lives in the serving repository.
 
@@ -109,7 +127,7 @@ A GPU companion notebook — base vs. prompted base vs. adapter, two T4 GPUs —
 **[off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation)** asks whether a new decision policy can be evaluated from logs collected by a different one, before any live test. On the Open Bandit Dataset[^2], estimators run on 1.37 M uniformly-random logged rounds are compared with the production policy's true click-through rate, measured on its own 12.4 M rounds.
 
 <div align="center">
-<sub><b>Table 3.</b> Relative error of the off-policy estimate against on-policy ground truth (from <code>results.json</code>).</sub>
+<sub><b>Table 4.</b> Relative error of the off-policy estimate against on-policy ground truth (from <code>results.json</code>).</sub>
 
 | Direct Method | IPW | Self-normalised IPW | Doubly Robust |
 |:--:|:--:|:--:|:--:|
@@ -131,7 +149,7 @@ Walkthroughs on request.
 
 ## 6. Open items
 
-Stated plainly, because they are the next things to measure: the vLLM / KServe path has not been applied to a live GPU cluster or benchmarked (TTFT and throughput are instrumented, not reported); multi-node DDP has not been run on GPUs; CI workflows are written but not yet enabled on these repositories.
+Stated plainly, because they are the next things to measure: vLLM has been benchmarked on Kaggle GPUs (Table 2, single runs) but the KServe / OpenShift AI path has not been applied to a live cluster; multi-node DDP has not been run on GPUs; CI workflows are written but not yet enabled on these repositories.
 
 ## 7. Toolkit
 
