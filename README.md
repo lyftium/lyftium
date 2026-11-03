@@ -16,6 +16,7 @@
 <img src="https://img.shields.io/badge/Hugging_Face-FFD21E?style=flat-square&logo=huggingface&logoColor=000" alt="Hugging Face" />
 <img src="https://img.shields.io/badge/PEFT_·_LoRA_/_QLoRA-FFD21E?style=flat-square&logo=huggingface&logoColor=000" alt="PEFT, LoRA / QLoRA" />
 <img src="https://img.shields.io/badge/vLLM-30A2FF?style=flat-square&logo=vllm&logoColor=fff" alt="vLLM" />
+<img src="https://img.shields.io/badge/KServe-326CE5?style=flat-square&logo=kubernetes&logoColor=fff" alt="KServe" />
 <img src="https://img.shields.io/badge/NVIDIA_CUDA-76B900?style=flat-square&logo=nvidia&logoColor=fff" alt="NVIDIA CUDA" />
 <img src="https://img.shields.io/badge/Red_Hat_OpenShift-EE0000?style=flat-square&logo=redhatopenshift&logoColor=fff" alt="Red Hat OpenShift" />
 <img src="https://img.shields.io/badge/ClickHouse-FFCC01?style=flat-square&logo=clickhouse&logoColor=000" alt="ClickHouse" />
@@ -28,7 +29,7 @@
 
 ---
 
-> **Abstract.** Much of applied machine learning stalls between a notebook that works and a service that someone else can deploy, monitor and audit. This profile collects public work on that gap. Section 2 describes a vision–language document-review pipeline packaged as a containerised microservice, with GPU inference through vLLM, Kubernetes and OpenShift manifests, Prometheus metrics and evaluation gates. Section 3 describes a parameter-efficient fine-tuning recipe (LoRA / QLoRA) that measures the base model before training, writes a lineage record for every run, and runs across processes with `torchrun` DDP. Section 4 reports an off-policy evaluation study on 1.37 M real logged decisions. Each project states what was measured, how to reproduce it, and what has not been run yet.
+> **Abstract.** Much of applied machine learning stalls between a notebook that works and a service that someone else can deploy, monitor and audit. This profile collects public work on that gap. Section 2 describes a vision–language document-review pipeline packaged as a containerised microservice, with GPU inference through vLLM served by KServe, Kubernetes and OpenShift AI manifests, Prometheus metrics and evaluation gates. Section 3 describes a parameter-efficient fine-tuning recipe (LoRA / QLoRA) that measures the base model before training, writes a lineage record for every run, and runs across processes with `torchrun` DDP. Section 4 reports an off-policy evaluation study on 1.37 M real logged decisions. Each project states what was measured, how to reproduce it, and what has not been run yet.
 >
 > **Keywords:** ML systems · model serving · LLM / VLM inference · distributed training · parameter-efficient fine-tuning · MLOps · evaluation · traceability
 
@@ -53,7 +54,7 @@ I came to this from engineering (design, technical drawings, validation) and a d
 flowchart LR
     A[Drawing<br/>PNG / PDF] --> B[Detect<br/>regions]
     B --> C[OCR]
-    C --> D[VLM<br/>vLLM, OpenAI API]
+    C --> D[VLM<br/>vLLM on KServe]
     D --> E[Rule<br/>checks]
     E --> F[Engineer<br/>review]
     D -. schema check fails .-> P[Deterministic<br/>parser]
@@ -70,9 +71,10 @@ flowchart LR
 |:--|:--|:--|
 | Interface | FastAPI, pydantic schemas, 413 / 415 / 422 / 503 errors with request id | `src/drawing_review/api.py` |
 | LLM inference | Streaming OpenAI-compatible client to vLLM, time-to-first-token metric, schema validation with fallback | `backends/llava.py` |
+| Model serving | KServe vLLM `ServingRuntime` + `InferenceService` (RawDeployment, tensor parallel over 2 GPUs), validated against the KServe CRD schemas | `deploy/kserve/`, `docs/kserve.md` |
 | Packaging | Multi-stage, non-root image; read-only root filesystem | `Dockerfile` |
 | Orchestration | Restricted Pod Security, probes, PDB, NetworkPolicy, GPU overlay, vLLM with tensor parallelism | `deploy/k8s/` |
-| OpenShift | Route, SCC-compatible overlay, NetworkPolicy for router / monitoring, `PyTorchJob` | `deploy/openshift/` |
+| OpenShift / OpenShift AI | Route, SCC-compatible overlay, NetworkPolicies, KServe single-model serving, `PyTorchJob` | `deploy/openshift/`, `deploy/openshift-ai/` |
 | Observability | Eight Prometheus metrics and alert rules | `metrics.py`, `deploy/monitoring/` |
 | Evaluation | Golden set, release gates, extraction vs. business metrics | `evaluation/` |
 | Traceability | Per-run lineage; engineering checklist mapped to the EU AI Act (not a legal claim) | `lineage.py`, `docs/ai-act-mapping.md` |
@@ -129,7 +131,7 @@ Walkthroughs on request.
 
 ## 6. Open items
 
-Stated plainly, because they are the next things to measure: the vLLM path has not been benchmarked on a GPU cluster (TTFT and throughput are instrumented, not reported); multi-node DDP has not been run on GPUs; CI workflows are written but not yet enabled on these repositories.
+Stated plainly, because they are the next things to measure: the vLLM / KServe path has not been applied to a live GPU cluster or benchmarked (TTFT and throughput are instrumented, not reported); multi-node DDP has not been run on GPUs; CI workflows are written but not yet enabled on these repositories.
 
 ## 7. Toolkit
 
@@ -139,9 +141,9 @@ Stated plainly, because they are the next things to measure: the vLLM path has n
 |:--|:--|
 | Languages | Python · Bash · SQL |
 | Models | PyTorch · Hugging Face Transformers · PEFT (LoRA / QLoRA) · Ultralytics YOLO · OpenCV |
-| Inference | vLLM (OpenAI-compatible API) · FastAPI |
+| Inference | vLLM (OpenAI-compatible API) · KServe · FastAPI |
 | Training | `torchrun` / DDP · bitsandbytes 4-bit · Kaggle GPUs |
-| Platform | Docker · Kubernetes · OpenShift · Kustomize · Prometheus |
+| Platform | Docker · Kubernetes · OpenShift / OpenShift AI · Kustomize · Prometheus |
 | Data | Kafka · ClickHouse · pandas · NumPy |
 
 </div>
