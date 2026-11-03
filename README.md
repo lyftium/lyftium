@@ -27,7 +27,7 @@
 
 ---
 
-> **Abstract.** Much of applied machine learning stalls between a notebook that works and a service that someone else can deploy, monitor and audit. This profile collects public work on that gap. Section 2 describes a vision–language document-review pipeline packaged as a containerised microservice, with GPU inference through vLLM served by KServe, Kubernetes and OpenShift AI manifests, Prometheus metrics and evaluation gates. Section 3 describes a parameter-efficient fine-tuning recipe (LoRA / QLoRA) that measures the base model before training, writes a lineage record for every run, and runs across processes with `torchrun` DDP. Section 4 reports an off-policy evaluation study on 1.37 M real logged decisions. Each project states what was measured, how to reproduce it, and what has not been run yet.
+> **Abstract.** Much of applied machine learning stalls between a notebook that works and a service that someone else can deploy, monitor and audit. Section 2 describes a vision–language document-review pipeline packaged as a containerised microservice, with GPU inference through vLLM served by KServe, Kubernetes and OpenShift AI manifests, Prometheus metrics and evaluation gates. Section 3 describes a parameter-efficient fine-tuning recipe (LoRA / QLoRA) that measures the base model before training, writes a lineage record for every run, and runs across processes with `torchrun` DDP. Section 4 reports an off-policy evaluation study on 1.37 M real logged decisions. Each project states what was measured, how to reproduce it, and what has not been run yet.
 >
 > **Keywords:** ML systems · model serving · LLM / VLM inference · distributed training · parameter-efficient fine-tuning · MLOps · evaluation · traceability
 
