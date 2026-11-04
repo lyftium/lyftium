@@ -28,8 +28,8 @@
 <br/>
 
 [**1 · Framing**](#1-framing) ·
-[**2 · Drawing review**](#2-drawing-review-service--integration-and-evaluation) ·
-[**3 · Fine-tuning**](#3-lora-finetune-recipe--adaptation-and-evaluation) ·
+[**2 · Drawing review**](#2-drawing-review-service--from-prototype-to-testable-microservice) ·
+[**3 · Fine-tuning**](#3-lora-finetune-recipe--baseline-first-lineage-kept) ·
 [**4 · Inference**](#4-vllm-serving-benchmark--throughput-and-latency) ·
 [**5 · Supporting**](#5-supporting-work) ·
 [**6 · Limits**](#6-scope-and-limits) ·
@@ -60,7 +60,7 @@ Optinampout ([optinampout.com](https://www.optinampout.com)) is a secondary acti
 
 ---
 
-## 2. Drawing Review Service — integration and evaluation
+## 2. Drawing Review Service — from prototype to testable microservice
 
 **[drawing-review-service](https://github.com/lyftium/drawing-review-service)** is a *public demonstrator* of an engineering-document review pipeline (detection → OCR → vision–language model → rule checks → human review). It is distinct from the private prototype described in §5.1.
 
@@ -105,7 +105,7 @@ flowchart LR
 
 ---
 
-## 3. LoRA Fine-Tune Recipe — adaptation and evaluation
+## 3. LoRA Fine-Tune Recipe — baseline first, lineage kept
 
 **[lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe)** is a small-scale experiment in model adaptation: evaluate the base model → train a LoRA / QLoRA adapter → evaluate on the **same** held-out set → write a report and a run record. The task maps drawing annotations to structured JSON.
 
