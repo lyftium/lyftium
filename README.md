@@ -189,6 +189,9 @@ PLM access for agents via an MCP server; Kafka → ClickHouse streaming and pre-
 
 ---
 
+
+**Profile tip for readers:** start with [drawing-review-service](https://github.com/lyftium/drawing-review-service), then [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4), then [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe).
+
 ## 6. Scope and limits
 
 | Claim one might infer | What is actually shown |
