@@ -3,8 +3,6 @@
 # Thinkering
 ### Notes on building machine-learning systems that other engineers can run
 
-**lyftium**<sup>1</sup>
-
 <sub><sup>1</sup>· French / English</sub>
 
 <br/>
