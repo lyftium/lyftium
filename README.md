@@ -174,7 +174,7 @@ Reading: on this hardware, **batching** dominates; AWQ helps single-stream laten
 
 ### 5.1 Private engineering prototype *(not a public result)*
 
-A local prototype of the drawing-review stack (YOLO, OCR, LoRA-tuned LLaVA, LangGraph orchestration) reported **74 % mAP@50** and **69.2 % F1** on **38** held-out drawings. Those figures belong to that private run; they are **not** customer or programme results. §2 is the public, model-free rebuild of the service shape.
+A local prototype of the drawing-review stack (detection, OCR, VLM, orchestration) exists privately and informed the public demonstrator in §2. **No private prototype metrics are published here** — they are not customer or programme results and must not be cited as such. §2 is the shareable, model-free rebuild of the service shape (contracts, gates, packaging).
 
 ### 5.2 AI gateway and tool-calling agent
 
@@ -198,7 +198,7 @@ PLM access for agents via an MCP server; Kafka → ClickHouse streaming and pre-
 | “Multi-GPU distributed training” | Two-process DDP **mechanics** on a tiny model; **no multi-GPU convergence study** |
 | “Production CI” | Workflows are written; **not enabled** on the public repositories |
 | “Serving numbers” | vLLM study is **single-run** exploratory on Kaggle T4s |
-| “Private prototype metrics” | Personal local run on 38 drawings; **not attributed to any employer or customer** |
+| “Private prototype metrics” | Not published; personal local run only — **not** employer/customer results |
 
 ---
 
