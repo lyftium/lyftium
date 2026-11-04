@@ -190,7 +190,7 @@ Unpublished explorations (PLM/MCP wiring, event-stream analytics). Available as 
 ---
 
 
-**Profile tip for readers:** start with [drawing-review-service](https://github.com/lyftium/drawing-review-service), then [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4), then [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe).
+**Profile tip for readers:** pin order DRS → vLLM → LoRA → AGS → [OPE](https://github.com/lyftium/off-policy-bandit-evaluation). Start with [drawing-review-service](https://github.com/lyftium/drawing-review-service), then [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4), then [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe).
 
 ## 6. Scope and limits
 
