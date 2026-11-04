@@ -1,11 +1,11 @@
 <div align="center">
 
-# From Prototype to Service
+# Thinkering
 ### Notes on building machine-learning systems that other engineers can run
 
 **lyftium**<sup>1</sup>
 
-<sub><sup>1</sup> LYFTIUM Labs · Paris, France · French / English</sub>
+<sub><sup>1</sup>· French / English</sub>
 
 <br/>
 
