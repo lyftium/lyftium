@@ -81,7 +81,7 @@ flowchart LR
 | | |
 |:--|:--|
 | **Problem** | A drawing-analysis prototype that only runs locally cannot be shared, scored or prepared for cluster deployment. |
-| **Architecture** | FastAPI service; pluggable backends (CPU stubs + OpenAI-compatible VLM client); golden-set evaluation; Docker image; Kubernetes and OpenShift AI / KServe manifests (RawDeployment, vLLM ServingRuntime). |
+| **Architecture** | FastAPI service; pluggable backends (CPU stubs + OpenAI-compatible VLM client); golden-set evaluation; Docker image; Kubernetes and OpenShift AI / KServe manifests (RawDeployment, vLLM ServingRuntime); model/data cards + risk register. |
 | **Verify** | `make install && make test` (57 CPU tests) · `make eval` · `make validate` (kustomize + kubeconform) · `make image && docker run --rm -p 8080:8080 --read-only --tmpfs /tmp drawing-review:dev` |
 | **Results** | Service contracts, evaluation gates and schema-validated manifests are in the repository; see Table 1. |
 | **Status & limits** | OpenShift AI and KServe manifests are prepared and schema-validated; **not applied to a live GPU cluster**. CI workflow is written (`ci/github-actions-ci.yml`) but **not enabled**. No green CI badge is shown. |
@@ -134,7 +134,7 @@ flowchart LR
 
 ## 4. vLLM Serving Benchmark — throughput and latency
 
-**[vLLM Serving Benchmark on T4](https://www.kaggle.com/code/lyftium/vllm-serving-benchmark-t4)** measures how serving levers move throughput and latency on commodity GPUs (2× Tesla T4, compute 7.5, fp16).
+**[vLLM Serving Benchmark on T4](https://github.com/lyftium/vllm-serving-benchmark-t4)** ([Kaggle notebook](https://www.kaggle.com/code/lyftium/vllm-serving-benchmark-t4)) measures how serving levers move throughput and latency on commodity GPUs (2× Tesla T4, compute 7.5, fp16).
 
 | | |
 |:--|:--|
@@ -213,7 +213,7 @@ PLM access for agents via an MCP server; Kafka → ClickHouse streaming and pre-
 
 1. lyftium. *drawing-review-service*. https://github.com/lyftium/drawing-review-service
 2. lyftium. *lora-finetune-recipe*. https://github.com/lyftium/lora-finetune-recipe
-3. lyftium. *vLLM Serving Benchmark on T4*. https://www.kaggle.com/code/lyftium/vllm-serving-benchmark-t4
+3. lyftium. *vLLM Serving Benchmark on T4*. https://github.com/lyftium/vllm-serving-benchmark-t4 · https://www.kaggle.com/code/lyftium/vllm-serving-benchmark-t4
 4. lyftium. *agent-gateway-stack*. https://github.com/lyftium/agent-gateway-stack
 5. lyftium. *off-policy-bandit-evaluation*. https://github.com/lyftium/off-policy-bandit-evaluation
 6. Saito et al., *Open Bandit Dataset and Pipeline*, NeurIPS Datasets and Benchmarks, 2021.
