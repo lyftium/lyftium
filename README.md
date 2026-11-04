@@ -63,7 +63,6 @@ Four habits recur across the repositories:
 3. **Lineage by default** — git commit, config hash, data hash and library versions sit next to every result.
 4. **Humans where errors are expensive** — automated checks narrow the work; an engineer signs off.
 
-Optinampout ([optinampout.com](https://www.optinampout.com)) is a secondary activity on applying agentic AI to operational workflows, with attention to integration and security constraints. No client outcomes are claimed here.
 
 ---
 
@@ -233,7 +232,6 @@ PLM access for agents via an MCP server; Kafka → ClickHouse streaming and pre-
 <sub>
 Aerospace engineering · Data science (Liora × Mines Paris – PSL) · LYFTIUM Labs, Paris<br/>
 <a href="mailto:contact@lyftium.com">contact@lyftium.com</a> ·
-<a href="https://www.optinampout.com">optinampout.com</a> ·
 <a href="https://www.kaggle.com/lyftium">kaggle.com/lyftium</a> ·
 <a href="https://github.com/lyftium">github.com/lyftium</a>
 </sub>
