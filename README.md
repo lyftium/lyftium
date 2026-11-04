@@ -42,8 +42,6 @@ The working assumption behind everything below is that a model is only useful on
 3. **Lineage by default** — git commit, config hash, data hash and library versions are written next to every result.
 4. **Humans where errors are expensive** — automated checks narrow the work; an engineer signs off.
 
-I came to this from engineering (design, technical drawings, validation) and a data-science programme with Mines Paris – PSL. At LYFTIUM Labs I build event-driven data and execution infrastructure — Kafka streams into ClickHouse, simulation before execution — for automated trading strategies on public blockchains; that work is not public.
-
 ## 2. Serving a vision–language pipeline
 
 **[drawing-review-service](https://github.com/lyftium/drawing-review-service)** turns a technical-drawing analysis prototype into a service: detection → OCR → vision–language model → rule checks → human review.
