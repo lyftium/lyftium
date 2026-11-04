@@ -3,7 +3,7 @@
 # AI Integration for Engineering Systems
 ### Evaluating models · serving them · packaging them so other engineers can run them
 
-**lyftium**<sup>1</sup> — Data Scientist · AI Integration & Engineering
+**Pierre**<sup>1</sup> — Data Scientist · AI Integration & Engineering
 
 <sub>
 <sup>1</sup> Aerospace engineering (design, drawings, validation) · Data science, Liora × Mines Paris – PSL · LYFTIUM Labs, Paris · French / English
