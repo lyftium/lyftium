@@ -177,7 +177,7 @@ A local prototype of the drawing-review stack (detection, OCR, VLM, orchestratio
 
 ### 5.2 AI gateway and tool-calling agent
 
-**[agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack)** — OpenAI-compatible gateway (auth by key hash, per-tenant quotas, failover, streaming pass-through, no prompt logging) and a bounded tool-calling agent (typed tools, timeouts, human approval for side effects). Gateway overhead ≈ **1.5 ms** p50 at concurrency 1 against an instant mock (median of 3 × 1 500 requests, laptop). OpenShift AI / KServe manifests prepared; **not applied live**. 54 tests; CI written, not enabled.
+**[agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack)** — OpenAI-compatible gateway (auth by key hash, per-tenant quotas, failover, streaming pass-through, no prompt logging) and a bounded tool-calling agent (typed tools, timeouts, human approval for side effects). Gateway overhead ≈ **1.5 ms** p50 at concurrency 1 against an instant mock (median of 3 × 1 500 requests, laptop). OpenShift AI / KServe manifests prepared; **not applied live**. 55 tests; CI written, not enabled.
 
 ### 5.3 Off-policy evaluation
 
