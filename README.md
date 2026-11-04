@@ -177,7 +177,7 @@ A local prototype of the drawing-review stack (detection, OCR, VLM, orchestratio
 
 ### 5.2 AI gateway and tool-calling agent
 
-**[agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack)** — OpenAI-compatible gateway (auth by key hash, per-tenant quotas, failover, streaming pass-through, no prompt logging) and a bounded tool-calling agent (typed tools, timeouts, human approval for side effects). Gateway overhead ≈ **1.5 ms** p50 at concurrency 1 against an instant mock (median of 3 × 1 500 requests, laptop). OpenShift AI / KServe manifests prepared; **not applied live**. 46 tests; CI written, not enabled.
+**[agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack)** — OpenAI-compatible gateway (auth by key hash, per-tenant quotas, failover, streaming pass-through, no prompt logging) and a bounded tool-calling agent (typed tools, timeouts, human approval for side effects). Gateway overhead ≈ **1.5 ms** p50 at concurrency 1 against an instant mock (median of 3 × 1 500 requests, laptop). OpenShift AI / KServe manifests prepared; **not applied live**. 48 tests; CI written, not enabled.
 
 ### 5.3 Off-policy evaluation
 
@@ -185,7 +185,7 @@ A local prototype of the drawing-review stack (detection, OCR, VLM, orchestratio
 
 ### 5.4 Other unpublished work
 
-PLM access for agents via an MCP server; Kafka → ClickHouse streaming and pre-trade simulation at LYFTIUM Labs. Walkthroughs on request.
+Unpublished explorations (PLM/MCP wiring, event-stream analytics). Available as walkthroughs on request — not public artefacts.
 
 ---
 
@@ -204,20 +204,6 @@ PLM access for agents via an MCP server; Kafka → ClickHouse streaming and pre-
 
 ---
 
-## 7. Toolkit
-
-| Layer | Tools |
-|:--|:--|
-| Languages | Python · Bash · SQL |
-| Models | PyTorch · Hugging Face Transformers · PEFT (LoRA / QLoRA) · Ultralytics YOLO · OpenCV |
-| Inference | vLLM (OpenAI-compatible API, tool calling) · KServe · FastAPI |
-| Integration | AI gateway · per-tenant quotas · bounded tool loop · human approval |
-| Training | `torchrun` / DDP · bitsandbytes 4-bit · Kaggle GPUs |
-| Platform | Docker · Kubernetes · OpenShift / OpenShift AI · Kustomize · Prometheus |
-| Data | Kafka · ClickHouse · pandas · NumPy |
-
----
-
 ## References
 
 1. lyftium. *drawing-review-service*. https://github.com/lyftium/drawing-review-service
@@ -233,9 +219,9 @@ PLM access for agents via an MCP server; Kafka → ClickHouse streaming and pre-
 
 <div align="center">
 <sub>
-Aerospace engineering · Data science (Liora × Mines Paris – PSL) · LYFTIUM Labs, Paris<br/>
-<a href="mailto:contact@lyftium.com">contact@lyftium.com</a> ·
+Aerospace engineering · Data science (Liora × Mines Paris – PSL) · Paris<br/>
 <a href="https://www.kaggle.com/lyftium">kaggle.com/lyftium</a> ·
+<a href="https://lyftium.github.io">lyftium.github.io</a> ·
 <a href="https://github.com/lyftium">github.com/lyftium</a>
 </sub>
 </div>
