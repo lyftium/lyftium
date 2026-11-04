@@ -6,7 +6,7 @@
 **Pierre**<sup>1</sup> — Data Scientist · AI Integration & Engineering
 
 <sub>
-<sup>1</sup> Aerospace engineering (design, drawings, validation) · Data science, Liora × Mines Paris – PSL · LYFTIUM Labs, Paris · French / English
+<sup>1</sup> Aerospace engineering · Data science, Liora × Mines Paris – PSL · French / English
 </sub>
 
 <br/>
