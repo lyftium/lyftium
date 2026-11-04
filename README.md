@@ -11,21 +11,6 @@
 
 <br/>
 
-<sub>
-<img src="https://skillicons.dev/icons?i=py,pytorch,docker,kubernetes,linux,bash,fastapi,prometheus,git&perline=9" alt="Python, PyTorch, Docker, Kubernetes, Linux, Bash, FastAPI, Prometheus, Git" />
-</sub>
-
-<br/>
-
-<sub>
-<img src="https://img.shields.io/badge/Hugging_Face-FFD21E?style=flat-square&logo=huggingface&logoColor=000" alt="Hugging Face" />
-<img src="https://img.shields.io/badge/PEFT_·_LoRA-FFD21E?style=flat-square&logo=huggingface&logoColor=000" alt="PEFT LoRA" />
-<img src="https://img.shields.io/badge/vLLM-30A2FF?style=flat-square&logo=vllm&logoColor=fff" alt="vLLM" />
-<img src="https://img.shields.io/badge/KServe-326CE5?style=flat-square&logo=kubernetes&logoColor=fff" alt="KServe" />
-<img src="https://img.shields.io/badge/OpenShift_AI_manifests-6B7280?style=flat-square&logo=redhatopenshift&logoColor=fff" alt="OpenShift AI manifests (prepared)" />
-</sub>
-
-<br/>
 
 [**1 · Framing**](#1-framing) ·
 [**2 · Drawing review**](#2-drawing-review-service--from-prototype-to-testable-microservice) ·
@@ -44,6 +29,28 @@
 > **Keywords:** AI integration · model evaluation · LLM / VLM serving · parameter-efficient fine-tuning · MLOps preparation · traceability · engineering workflows
 
 ---
+
+
+<details>
+<summary>Tooling reflected in the public artefacts (OpenShift AI = manifests prepared, not a live-cluster claim)</summary>
+
+<sub>
+<img src="https://skillicons.dev/icons?i=py,pytorch,docker,kubernetes,linux,bash,fastapi,prometheus,git&perline=9" alt="Python, PyTorch, Docker, Kubernetes, Linux, Bash, FastAPI, Prometheus, Git" />
+</sub>
+
+<br/>
+
+<sub>
+<img src="https://img.shields.io/badge/Hugging_Face-FFD21E?style=flat-square&logo=huggingface&logoColor=000" alt="Hugging Face" />
+<img src="https://img.shields.io/badge/PEFT_·_LoRA-FFD21E?style=flat-square&logo=huggingface&logoColor=000" alt="PEFT LoRA" />
+<img src="https://img.shields.io/badge/vLLM-30A2FF?style=flat-square&logo=vllm&logoColor=fff" alt="vLLM" />
+<img src="https://img.shields.io/badge/KServe-326CE5?style=flat-square&logo=kubernetes&logoColor=fff" alt="KServe" />
+<img src="https://img.shields.io/badge/OpenShift_AI_manifests-6B7280?style=flat-square&logo=redhatopenshift&logoColor=fff" alt="OpenShift AI manifests (prepared)" />
+</sub>
+
+<br/>
+
+</details>
 
 ## 1. Framing
 
