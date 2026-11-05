@@ -72,7 +72,7 @@ How a screener can map integration skills to repositories — without inventing 
 |:--|:--|:--|
 | Package → API → tests → image → CI | [drawing-review-service](https://github.com/lyftium/drawing-review-service) | Live CI + Kind Ready |
 | Release identity (commit ↔ image digest ↔ eval) | [`docs/image-digests.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/image-digests.md), `releases/` | GHCR `RepoDigests` recorded |
-| K8s / OpenShift prep (SCC, NetworkPolicy, probes) | `deploy/` overlays + [`docs/runbook.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/runbook.md) | Schema-validated; Kind applied; GPU OpenShift not live |
+| K8s / OpenShift prep (SCC, NetworkPolicy, probes, rollback) | `deploy/` + [`docs/runbook.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/runbook.md) + Kind rollback transcript | Schema-validated; Kind Ready + undo; GPU OpenShift not live |
 | Inference levers (batching, AWQ, TP, TTFT) | [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4) | Single Kaggle campaign + `PROTOCOL.md` |
 | Fine-tune + lineage + resume | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) | CPU tests + prompted baseline artefact |
 | DDP token-weighted loss (math, not NCCL) | LoRA `labs/ddp-token-weighting/` | Deterministic CPU NumPy lab |
@@ -105,7 +105,7 @@ flowchart LR
 |:--|:--|
 | **Problem** | A drawing-analysis prototype that only runs locally cannot be shared, scored or prepared for cluster deployment. |
 | **Architecture** | FastAPI service; pluggable backends (CPU stubs + OpenAI-compatible VLM client); golden-set evaluation; Docker image; Kubernetes and OpenShift AI / KServe manifests (RawDeployment, vLLM ServingRuntime); model/data cards + risk register. |
-| **Verify** | `make install && make test` (57 CPU tests) · `make eval` · `make validate` · Kind Ready evidence · GHCR digest in `docs/image-digests.md` · `make image && docker run --rm -p 8080:8080 --read-only --tmpfs /tmp drawing-review:dev` |
+| **Verify** | `make install && make test` (57 CPU tests) · `make eval` · `make validate` · Kind Ready + rollback evidence · GHCR digest in `docs/image-digests.md` · `make image && docker run --rm -p 8080:8080 --read-only --tmpfs /tmp drawing-review:dev` |
 | **Results** | Service contracts, evaluation gates and schema-validated manifests are in the repository; see Table 1. |
 | **Status & limits** | Kind apply **Ready 1/1** + eval Job Complete ([evidence](https://github.com/lyftium/drawing-review-service/tree/main/docs/evidence/kind-apply)). OpenShift AI / GPU cluster **not** applied live. CI green on `main`; GHCR digest `sha256:77d1723b9d2a1a565ec8fa61787db5f881bf5a77156cfa7f4744b15c893b9bad` pinned in base/OpenShift overlays ([digests](https://github.com/lyftium/drawing-review-service/blob/main/docs/image-digests.md)). |
 | **Next** | Apply `deploy/openshift-ai` on a shared GPU project; measure TTFT against a real InferenceService. |
