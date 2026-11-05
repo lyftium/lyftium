@@ -27,6 +27,8 @@
 > **Abstract.** Applied machine learning for engineering stalls less often on model accuracy than on the gap between a notebook and a component that another engineer can call, score and prepare for deployment. This note collects public work on that gap. The primary evidence is three artefacts, in order of relevance to integration work: (i) a document-review microservice with an API, evaluation gates and container / Kubernetes / OpenShift AI manifests; (ii) a LoRA fine-tuning recipe that measures a baseline before training and records lineage for every run; (iii) a GPU serving study of vLLM under batching, quantisation, tensor parallelism and load. Supporting repositories cover an AI gateway with a tool-calling agent, and off-policy evaluation of decision policies from logged data. Every project below states what was measured, how to reproduce it, and what has not been run on a live cluster.
 >
 > **Keywords:** AI integration · model evaluation · LLM / VLM serving · parameter-efficient fine-tuning · MLOps preparation · traceability · engineering workflows
+>
+> **FR (signaux):** intégration de composants IA · évaluation / non-régression · serving vLLM · fine-tuning LoRA · préparation OpenShift AI / KServe · traçabilité · supervision humaine (approve-once) — preuves publiques en anglais ci-dessous; pas de cluster OpenShift live.
 
 ---
 
@@ -73,11 +75,11 @@ How a screener can map integration skills to repositories — without inventing 
 | Package → API → tests → image → CI | [drawing-review-service](https://github.com/lyftium/drawing-review-service) | Live CI + Kind Ready |
 | Release identity (commit ↔ image digest ↔ eval) | [`docs/image-digests.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/image-digests.md), `releases/` | GHCR `RepoDigests` recorded |
 | K8s / OpenShift prep (SCC, NetworkPolicy, probes, rollback) | `deploy/` + [`docs/runbook.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/runbook.md) + Kind rollback transcript | Schema-validated; Kind Ready + undo; GPU OpenShift not live |
-| Inference levers (batching, AWQ, TP, TTFT) | [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4) | Single Kaggle campaign + `PROTOCOL.md` |
+| Inference levers (batching, AWQ, TP, TTFT) | [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4) · [`DEMO`](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/docs/DEMO.md) | Single Kaggle campaign + `PROTOCOL.md` |
 | Fine-tune + lineage + resume | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) · [`DEMO`](https://github.com/lyftium/lora-finetune-recipe/blob/main/docs/DEMO.md) | CPU tests + prompted baseline artefact |
 | DDP token-weighted loss (math, not NCCL) | LoRA `labs/ddp-token-weighting/` | Deterministic CPU NumPy lab |
 | Gateway authz / quotas / agent allowlist | [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack) · [`DEMO`](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/DEMO.md) | Tests + GHCR + Kind Ready + agent-run (ISA / approve-once) |
-| Off-policy decision evaluation | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) | Real OBD logs; numbers in `results.json` |
+| Off-policy decision evaluation | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) · [`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md) | Real OBD logs; numbers in `results.json` |
 
 
 
@@ -198,7 +200,7 @@ A local prototype of the drawing-review stack (detection, OCR, VLM, orchestratio
 
 ### 5.3 Off-policy evaluation
 
-**[off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation)** — can a new policy be scored from another policy's logs before a live test? On the Open Bandit Dataset[^1], estimators on 1.37 M logged rounds recover the production CTR within **5.3–6.1 %** relative error (IPW / SNIPW / DR intervals cover the truth; DM's does not). Related notebook: [YOLO Road Damage: Honest Evaluation](https://www.kaggle.com/code/lyftium/yolo-road-damage-honest-evaluation).
+**[off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation)** — can a new policy be scored from another policy's logs before a live test? On the Open Bandit Dataset[^1], estimators on 1.37 M logged rounds recover the production CTR within **5.3–6.1 %** relative error (IPW / SNIPW / DR intervals cover the truth; DM's does not). Screener path: [`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md). Related notebook: [YOLO Road Damage: Honest Evaluation](https://www.kaggle.com/code/lyftium/yolo-road-damage-honest-evaluation).
 
 ### 5.4 Other unpublished work
 
@@ -207,7 +209,7 @@ Unpublished explorations (PLM/MCP wiring, event-stream analytics). Available as 
 ---
 
 
-**Profile tip for readers:** pin order DRS → vLLM → LoRA → AGS → [OPE](https://github.com/lyftium/off-policy-bandit-evaluation). Start with [drawing-review-service](https://github.com/lyftium/drawing-review-service), then [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4), then [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe).
+**Profile tip for readers:** pin order DRS → vLLM → LoRA → AGS → [OPE](https://github.com/lyftium/off-policy-bandit-evaluation) (add OPE as 5th pin if missing). Each flagship has a [`DEMO.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md) screener path. Start with [drawing-review-service](https://github.com/lyftium/drawing-review-service), then [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4), then [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe).
 
 ## 6. Scope and limits
 
