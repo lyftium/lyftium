@@ -25,6 +25,13 @@
 
 ---
 
+
+| 30-second glance | Start here | Proof ceiling |
+|:--|:--|:--|
+| **Data scientist** | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) · [`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md) | 1.37 M logs · bootstrap CIs · time split · estimated lift ≠ A/B |
+| **AI integrator** | [drawing-review-service](https://github.com/lyftium/drawing-review-service) · [`DEMO`](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md) | Live CI · Kind Ready · GHCR · OpenShift AI **not** live |
+| **Also pin** | LoRA · vLLM T4 · agent-gateway-stack | Each has `docs/DEMO.md` · [Kaggle](https://www.kaggle.com/lyftium) |
+
 > **Abstract.** Two hiring lenses, one public body of work. As a **data scientist**, the core habit is honest evaluation before a decision: baselines on the same split, uncertainty (bootstrap CIs), chronological hold-outs, and refusing a precise-but-wrong estimator. As an **AI integrator**, the same habit continues into packaging: typed APIs, gates, images, Kind-proven Kubernetes prep. Primary DS evidence: off-policy evaluation on **1.37 M** real bandit rounds. Primary integration evidence: drawing-review microservice, LoRA recipe with prompted baseline, vLLM T4 protocol study, AI gateway + approve-once agent. Every project states what was measured, how to reproduce it, and what was not run live.
 >
 > **Keywords:** data science · off-policy evaluation · baselines · confidence intervals · model evaluation · AI integration · LLM / VLM serving · LoRA · MLOps preparation · traceability · engineering workflows
