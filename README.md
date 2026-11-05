@@ -64,6 +64,23 @@ Four habits recur across the repositories:
 4. **Humans where errors are expensive** — automated checks narrow the work; an engineer signs off.
 
 
+## 1.1 Competence map (public artefacts only)
+
+How a screener can map integration skills to repositories — without inventing cluster claims:
+
+| Skill signal | Where to look | Evidence level |
+|:--|:--|:--|
+| Package → API → tests → image → CI | [drawing-review-service](https://github.com/lyftium/drawing-review-service) | Live CI + Kind Ready |
+| Release identity (commit ↔ image digest ↔ eval) | [`docs/image-digests.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/image-digests.md), `releases/` | GHCR `RepoDigests` recorded |
+| K8s / OpenShift prep (SCC, NetworkPolicy, probes) | `deploy/` overlays + [`docs/runbook.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/runbook.md) | Schema-validated; Kind applied; GPU OpenShift not live |
+| Inference levers (batching, AWQ, TP, TTFT) | [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4) | Single Kaggle campaign + `PROTOCOL.md` |
+| Fine-tune + lineage + resume | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) | CPU tests + prompted baseline artefact |
+| DDP token-weighted loss (math, not NCCL) | LoRA `labs/ddp-token-weighting/` | Deterministic CPU NumPy lab |
+| Gateway authz / quotas / agent allowlist | [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack) | Tests + GHCR image |
+| Off-policy decision evaluation | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) | Real OBD logs; numbers in `results.json` |
+
+
+
 ---
 
 ## 2. Drawing Review Service — from prototype to testable microservice
@@ -88,10 +105,10 @@ flowchart LR
 |:--|:--|
 | **Problem** | A drawing-analysis prototype that only runs locally cannot be shared, scored or prepared for cluster deployment. |
 | **Architecture** | FastAPI service; pluggable backends (CPU stubs + OpenAI-compatible VLM client); golden-set evaluation; Docker image; Kubernetes and OpenShift AI / KServe manifests (RawDeployment, vLLM ServingRuntime); model/data cards + risk register. |
-| **Verify** | `make install && make test` (57 CPU tests) · `make eval` · `make validate` (kustomize + kubeconform) · `make image && docker run --rm -p 8080:8080 --read-only --tmpfs /tmp drawing-review:dev` |
+| **Verify** | `make install && make test` (57 CPU tests) · `make eval` · `make validate` · Kind Ready evidence · GHCR digest in `docs/image-digests.md` · `make image && docker run --rm -p 8080:8080 --read-only --tmpfs /tmp drawing-review:dev` |
 | **Results** | Service contracts, evaluation gates and schema-validated manifests are in the repository; see Table 1. |
-| **Status & limits** | OpenShift AI and KServe manifests are prepared and schema-validated; **not applied to a live GPU cluster**. CI workflow is written (`ci/github-actions-ci.yml`) but **not enabled**. No green CI badge is shown. |
-| **Next** | Apply the OpenShift AI overlay on a shared GPU project; enable CI once a token with `workflow` scope is available. |
+| **Status & limits** | Kind apply **Ready 1/1** + eval Job Complete ([evidence](https://github.com/lyftium/drawing-review-service/tree/main/docs/evidence/kind-apply)). OpenShift AI / GPU cluster **not** applied live. CI green on `main`; GHCR digest `sha256:77d1723b9d2a1a565ec8fa61787db5f881bf5a77156cfa7f4744b15c893b9bad` pinned in base/OpenShift overlays ([digests](https://github.com/lyftium/drawing-review-service/blob/main/docs/image-digests.md)). |
+| **Next** | Apply `deploy/openshift-ai` on a shared GPU project; measure TTFT against a real InferenceService. |
 
 <div align="center">
 <sub><b>Table 1.</b> What is implemented in the public demonstrator.</sub>
@@ -177,7 +194,7 @@ A local prototype of the drawing-review stack (detection, OCR, VLM, orchestratio
 
 ### 5.2 AI gateway and tool-calling agent
 
-**[agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack)** — OpenAI-compatible gateway (auth by key hash, per-tenant quotas, failover, streaming pass-through, no prompt logging) and a bounded tool-calling agent (typed tools, timeouts, human approval for side effects). Gateway overhead ≈ **1.5 ms** p50 at concurrency 1 against an instant mock (median of 3 × 1 500 requests, laptop). OpenShift AI / KServe manifests prepared; **not applied live**. 55 tests; CI written, not enabled.
+**[agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack)** — OpenAI-compatible gateway (auth by key hash, per-tenant quotas, failover, streaming pass-through, no prompt logging) and a bounded tool-calling agent (allowlisted tools, typed schemas, timeouts, approve-once for side effects, ISA refuse + injection posture tests). Gateway overhead ≈ **1.5 ms** p50 at concurrency 1 against an instant mock (median of 3 × 1 500 requests, laptop). OpenShift AI / KServe manifests prepared; **not applied live**. CI green; GHCR digest `sha256:660b84b00aa62e883af7c5f487b312c7919d69000b1d4ad2f52a1f9ffd3164d8`.
 
 ### 5.3 Off-policy evaluation
 
@@ -198,7 +215,7 @@ Unpublished explorations (PLM/MCP wiring, event-stream analytics). Available as 
 |:--|:--|
 | “OpenShift / KServe deployment” | Manifests exist and validate against schemas; **no live cluster apply** is documented |
 | “Multi-GPU distributed training” | Two-process DDP **mechanics** on a tiny model; **no multi-GPU convergence study** |
-| “Production CI” | Workflows are written; **not enabled** on the public repositories |
+| “Production CI / GHCR” | CI **enabled** on flagships; DRS+AGS digests recorded. Live GPU OpenShift apply still not claimed |
 | “Serving numbers” | vLLM study is **single-run** exploratory on Kaggle T4s |
 | “Private prototype metrics” | Not published; personal local run only — **not** employer/customer results |
 
