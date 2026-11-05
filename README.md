@@ -74,7 +74,7 @@ How a screener can map integration skills to repositories — without inventing 
 | Release identity (commit ↔ image digest ↔ eval) | [`docs/image-digests.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/image-digests.md), `releases/` | GHCR `RepoDigests` recorded |
 | K8s / OpenShift prep (SCC, NetworkPolicy, probes, rollback) | `deploy/` + [`docs/runbook.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/runbook.md) + Kind rollback transcript | Schema-validated; Kind Ready + undo; GPU OpenShift not live |
 | Inference levers (batching, AWQ, TP, TTFT) | [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4) | Single Kaggle campaign + `PROTOCOL.md` |
-| Fine-tune + lineage + resume | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) | CPU tests + prompted baseline artefact |
+| Fine-tune + lineage + resume | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) · [`DEMO`](https://github.com/lyftium/lora-finetune-recipe/blob/main/docs/DEMO.md) | CPU tests + prompted baseline artefact |
 | DDP token-weighted loss (math, not NCCL) | LoRA `labs/ddp-token-weighting/` | Deterministic CPU NumPy lab |
 | Gateway authz / quotas / agent allowlist | [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack) · [`DEMO`](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/DEMO.md) | Tests + GHCR + Kind Ready + agent-run (ISA / approve-once) |
 | Off-policy decision evaluation | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) | Real OBD logs; numbers in `results.json` |
