@@ -76,7 +76,7 @@ How a screener can map integration skills to repositories — without inventing 
 | Inference levers (batching, AWQ, TP, TTFT) | [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4) | Single Kaggle campaign + `PROTOCOL.md` |
 | Fine-tune + lineage + resume | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) | CPU tests + prompted baseline artefact |
 | DDP token-weighted loss (math, not NCCL) | LoRA `labs/ddp-token-weighting/` | Deterministic CPU NumPy lab |
-| Gateway authz / quotas / agent allowlist | [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack) | Tests + GHCR + Kind Ready |
+| Gateway authz / quotas / agent allowlist | [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack) · [`DEMO`](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/DEMO.md) | Tests + GHCR + Kind Ready + agent-run (ISA / approve-once) |
 | Off-policy decision evaluation | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) | Real OBD logs; numbers in `results.json` |
 
 
@@ -194,7 +194,7 @@ A local prototype of the drawing-review stack (detection, OCR, VLM, orchestratio
 
 ### 5.2 AI gateway and tool-calling agent
 
-**[agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack)** — OpenAI-compatible gateway (auth by key hash, per-tenant quotas, failover, streaming pass-through, no prompt logging) and a bounded tool-calling agent (allowlisted tools, typed schemas, timeouts, approve-once for side effects, ISA refuse + injection posture tests). Gateway overhead ≈ **1.5 ms** p50 at concurrency 1 against an instant mock (median of 3 × 1 500 requests, laptop). Kind Ready (mock-llm / gateway / agent) on shared `drw`; OpenShift AI **not** applied live. CI green; GHCR digest `sha256:660b84b00aa62e883af7c5f487b312c7919d69000b1d4ad2f52a1f9ffd3164d8`.
+**[agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack)** — OpenAI-compatible gateway (auth by key hash, per-tenant quotas, failover, streaming pass-through, no prompt logging) and a bounded tool-calling agent (allowlisted tools, typed schemas, timeouts, approve-once for side effects, ISA refuse + injection posture tests). Gateway overhead ≈ **1.5 ms** p50 at concurrency 1 against an instant mock (median of 3 × 1 500 requests, laptop). Kind Ready (mock-llm / gateway / agent) on shared `drw` with live agent-run evidence: ISA completed @ 11 km; `submit_simulation_job` → awaiting_approval → accepted → duplicate ([transcript](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/evidence/kind-apply/agent-run-20261104-190455.txt), [`DEMO`](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/DEMO.md)). OpenShift AI **not** applied live. CI green; GHCR digest `sha256:660b84b00aa62e883af7c5f487b312c7919d69000b1d4ad2f52a1f9ffd3164d8`.
 
 ### 5.3 Off-policy evaluation
 
