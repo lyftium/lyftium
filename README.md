@@ -65,6 +65,12 @@ Four habits recur across the repositories:
 3. **Lineage by default** — git commit, config hash, data hash and library versions sit next to every result.
 4. **Humans where errors are expensive** — automated checks narrow the work; an engineer signs off.
 
+### Screener pitch (≈90 s)
+
+Public work answers three questions: (1) how to make an ML component **callable, scored and cluster-prepared**; (2) how to adapt a model with a **same-split baseline and lineage**; (3) how to avoid shipping a decision from a **misleading metric**. Start at [drawing-review-service](https://github.com/lyftium/drawing-review-service) ([`DEMO`](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md)), then [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4), [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe), [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack), [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation). Limits stay explicit: Kind Ready ≠ live GPU OpenShift; DDP lab ≠ multi-node NCCL; single-run serving ≠ SLO.
+
+**FR (90 s):** Intégration de composants IA pour workflows engineering — contrats/API/tests/image, évaluation avant adaptation, serving mesuré sous protocole, gateway + agent borné (approve-once), évaluation hors-politique avant A/B. Preuves en anglais dans les dépôts; OpenShift AI préparé, pas appliqué live.
+
 
 ## 1.1 Competence map (public artefacts only)
 
@@ -72,13 +78,17 @@ How a screener can map integration skills to repositories — without inventing 
 
 | Skill signal | Where to look | Evidence level |
 |:--|:--|:--|
-| Package → API → tests → image → CI | [drawing-review-service](https://github.com/lyftium/drawing-review-service) | Live CI + Kind Ready |
+| Package → API → tests → image → CI | [drawing-review-service](https://github.com/lyftium/drawing-review-service) · [`DEMO`](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md) | Live CI + Kind Ready |
 | Release identity (commit ↔ image digest ↔ eval) | [`docs/image-digests.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/image-digests.md), `releases/` | GHCR `RepoDigests` recorded |
 | K8s / OpenShift prep (SCC, NetworkPolicy, probes, rollback) | `deploy/` + [`docs/runbook.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/runbook.md) + Kind rollback transcript | Schema-validated; Kind Ready + undo; GPU OpenShift not live |
 | Inference levers (batching, AWQ, TP, TTFT) | [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4) · [`DEMO`](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/docs/DEMO.md) | Single Kaggle campaign + `PROTOCOL.md` |
 | Fine-tune + lineage + resume | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) · [`DEMO`](https://github.com/lyftium/lora-finetune-recipe/blob/main/docs/DEMO.md) | CPU tests + prompted baseline artefact |
 | DDP token-weighted loss (math, not NCCL) | LoRA `labs/ddp-token-weighting/` | Deterministic CPU NumPy lab |
 | Gateway authz / quotas / agent allowlist | [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack) · [`DEMO`](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/DEMO.md) | Tests + GHCR + Kind Ready + agent-run (ISA / approve-once) |
+| Pending-first diagnosis (events before “add GPUs”) | DRS [`docs/runbook.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/runbook.md) | Decision tree + Kind rollback transcript |
+| Model ingest (no casual `trust_remote_code`) | LoRA [`docs/model-ingest.md`](https://github.com/lyftium/lora-finetune-recipe/blob/main/docs/model-ingest.md) | Policy + pytest |
+| Digest ≠ signature ≠ approval | DRS [`checklists/release-approval.md`](https://github.com/lyftium/drawing-review-service/blob/main/checklists/release-approval.md) | Release checklist (engineering, not a legal claim) |
+| AI Act–style control map (engineering) | DRS [`docs/ai-act-mapping.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/ai-act-mapping.md) · AGS [`docs/vnv.md`](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/vnv.md) | Checklist + V&V split; **not** a conformity certificate |
 | Off-policy decision evaluation | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) · [`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md) | Real OBD logs; numbers in `results.json` |
 
 
