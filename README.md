@@ -1,7 +1,7 @@
 <div align="center">
 
 # AI Integration for Engineering Systems
-### Evaluating models · serving them · packaging them so other engineers can run them
+### Evaluating decisions and models · serving them · packaging them so other engineers can run them
 
 **Pierre**<sup>1</sup> — Data Scientist · AI Integration & Engineering
 
@@ -13,22 +13,23 @@
 
 
 [**1 · Framing**](#1-framing) ·
-[**2 · Drawing review**](#2-drawing-review-service--from-prototype-to-testable-microservice) ·
-[**3 · Fine-tuning**](#3-lora-finetune-recipe--baseline-first-lineage-kept) ·
-[**4 · Inference**](#4-vllm-serving-benchmark--throughput-and-latency) ·
-[**5 · Supporting**](#5-supporting-work) ·
-[**6 · Limits**](#6-scope-and-limits) ·
+[**2 · Decision evaluation**](#2-off-policy-evaluation--decisions-from-logged-data) ·
+[**3 · Drawing review**](#3-drawing-review-service--from-prototype-to-testable-microservice) ·
+[**4 · Fine-tuning**](#4-lora-finetune-recipe--baseline-first-lineage-kept) ·
+[**5 · Inference**](#5-vllm-serving-benchmark--throughput-and-latency) ·
+[**6 · Supporting**](#6-supporting-work) ·
+[**7 · Limits**](#7-scope-and-limits) ·
 [**Kaggle**](https://www.kaggle.com/lyftium)
 
 </div>
 
 ---
 
-> **Abstract.** Applied machine learning for engineering stalls less often on model accuracy than on the gap between a notebook and a component that another engineer can call, score and prepare for deployment. This note collects public work on that gap. The primary evidence is three artefacts, in order of relevance to integration work: (i) a document-review microservice with an API, evaluation gates and container / Kubernetes / OpenShift AI manifests; (ii) a LoRA fine-tuning recipe that measures a baseline before training and records lineage for every run; (iii) a GPU serving study of vLLM under batching, quantisation, tensor parallelism and load. Supporting repositories cover an AI gateway with a tool-calling agent, and off-policy evaluation of decision policies from logged data. Every project below states what was measured, how to reproduce it, and what has not been run on a live cluster.
+> **Abstract.** Two hiring lenses, one public body of work. As a **data scientist**, the core habit is honest evaluation before a decision: baselines on the same split, uncertainty (bootstrap CIs), chronological hold-outs, and refusing a precise-but-wrong estimator. As an **AI integrator**, the same habit continues into packaging: typed APIs, gates, images, Kind-proven Kubernetes prep. Primary DS evidence: off-policy evaluation on **1.37 M** real bandit rounds. Primary integration evidence: drawing-review microservice, LoRA recipe with prompted baseline, vLLM T4 protocol study, AI gateway + approve-once agent. Every project states what was measured, how to reproduce it, and what was not run live.
 >
-> **Keywords:** AI integration · model evaluation · LLM / VLM serving · parameter-efficient fine-tuning · MLOps preparation · traceability · engineering workflows
+> **Keywords:** data science · off-policy evaluation · baselines · confidence intervals · model evaluation · AI integration · LLM / VLM serving · LoRA · MLOps preparation · traceability · engineering workflows
 >
-> **FR (signaux):** intégration de composants IA · évaluation / non-régression · serving vLLM · fine-tuning LoRA · préparation OpenShift AI / KServe · traçabilité · supervision humaine (approve-once) — preuves publiques en anglais ci-dessous; pas de cluster OpenShift live.
+> **FR (signaux):** data scientist · évaluation hors-politique / intervalles de confiance · baselines · aide à la décision · intégration de composants IA · non-régression · serving vLLM · fine-tuning LoRA · préparation OpenShift AI / KServe · traçabilité · supervision humaine — preuves en anglais; pas de cluster OpenShift live.
 
 ---
 
@@ -56,25 +57,28 @@
 
 ## 1. Framing
 
-I work at the intersection of **aerospace engineering practice** (design, technical drawings, validation) and **AI integration**: turning machine-learning capabilities into practical, testable components for engineering workflows. My public work focuses on document intelligence, model evaluation, reproducible Python pipelines and API-based integration, and explores LLM fine-tuning, inference performance and deployment preparation.
+I work as a **data scientist** with an **integration** bias: aerospace engineering practice (drawings, validation) meets evaluation-first ML — then packaging so another engineer can call, score and prepare a component. Public work spans off-policy decision evaluation, document intelligence, fine-tuning with honest baselines, inference measurement, and gateway/agent controls.
 
-Four habits recur across the repositories:
+Five habits recur:
 
-1. **Contracts first** — typed request / response schemas, structured errors, health and readiness that mean different things.
-2. **Baselines before adapters** — fine-tuning is scored against the untouched model on the same held-out set.
-3. **Lineage by default** — git commit, config hash, data hash and library versions sit next to every result.
-4. **Humans where errors are expensive** — automated checks narrow the work; an engineer signs off.
+1. **Question before model** — state the decision (ship a policy? promote an adapter?) and the counterfactual.
+2. **Baselines and uncertainty** — same-split baselines; bootstrap CIs; chronological hold-outs; call out over-confident estimators.
+3. **Contracts first** — typed APIs, structured errors, health ≠ readiness.
+4. **Lineage by default** — git, config/data hashes and library versions next to every result.
+5. **Humans where errors are expensive** — gates narrow the work; an engineer signs off.
 
-### Screener pitch (≈90 s)
+### Screener pitches (≈90 s)
 
-Public work answers three questions: (1) how to make an ML component **callable, scored and cluster-prepared**; (2) how to adapt a model with a **same-split baseline and lineage**; (3) how to avoid shipping a decision from a **misleading metric**. Start at [drawing-review-service](https://github.com/lyftium/drawing-review-service) ([`DEMO`](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md)), then [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4), [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe), [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack), [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation). Limits stay explicit: Kind Ready ≠ live GPU OpenShift; DDP lab ≠ multi-node NCCL; single-run serving ≠ SLO.
+**Data scientist track.** Start at [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) ([`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md)): recover production CTR from 1.37 M logged rounds within 5.3–6.1 % relative error; IPW/SNIPW/DR CIs cover truth, DM’s does not; popularity beats a weak GBDT-greedy on a time split (~2.1× estimated lift — candidate for A/B, not a shipped result). Then [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) (unprompted exact_match 0.0 → fewshot 0.8 on the same `test_data_hash`) and [YOLO Road Damage: Honest Evaluation](https://www.kaggle.com/code/lyftium/yolo-road-damage-honest-evaluation).
 
-**FR (90 s):** Intégration de composants IA pour workflows engineering — contrats/API/tests/image, évaluation avant adaptation, serving mesuré sous protocole, gateway + agent borné (approve-once), évaluation hors-politique avant A/B. Preuves en anglais dans les dépôts; OpenShift AI préparé, pas appliqué live.
+**Integrator track.** Start at [drawing-review-service](https://github.com/lyftium/drawing-review-service) ([`DEMO`](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md)), then vLLM T4 protocol, LoRA, [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack). Limits: Kind Ready ≠ live GPU OpenShift; DDP lab ≠ multi-node NCCL; single-run serving ≠ SLO.
+
+**FR (90 s):** Data scientist — évaluation hors-politique, IC bootstrap, baselines, aide à la décision avant A/B. Intégrateur — contrats/API/tests/image, serving mesuré, gateway + approve-once. Preuves en anglais; OpenShift AI préparé, pas live.
 
 
-## 1.1 Competence map (public artefacts only)
+## 1.1 Integration competence map (public artefacts only)
 
-How a screener can map integration skills to repositories — without inventing cluster claims:
+How an **integrator** screener maps skills to repositories — without inventing cluster claims:
 
 | Skill signal | Where to look | Evidence level |
 |:--|:--|:--|
@@ -92,12 +96,39 @@ How a screener can map integration skills to repositories — without inventing 
 | Off-policy decision evaluation | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) · [`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md) | Real OBD logs; numbers in `results.json` |
 
 
+## 1.2 Data scientist competence map (public artefacts only)
+
+How a **data scientist** screener maps skills — numbers only from published artefacts:
+
+| Skill signal | Where to look | Evidence level |
+|:--|:--|:--|
+| Decision from logged data (OPE) | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) · [`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md) | 1.37 M rounds; IPW/SNIPW/DR; `results.json` |
+| Estimator honesty (CI covers truth) | OPE E1 table | DM excludes truth; weighted estimators cover |
+| Chronological train/test (no look-ahead) | OPE E2 | 70/30 time split; ~2.1× estimated lift ≠ A/B |
+| EDA under class imbalance | OPE `figures/eda.png` + `results.json`→`eda` | CTR ~0.35%; slot/item ranges |
+| Baseline before claiming lift | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) prompted modes | exact_match 0.0 → 0.8 fewshot, same hash |
+| CV / detection evaluation discipline | [YOLO honest evaluation](https://www.kaggle.com/code/lyftium/yolo-road-damage-honest-evaluation) (Kaggle) | Notebook; not employer metrics |
+| Extraction vs business metrics | DRS golden gates | Separated in eval harness |
+
 
 ---
 
-## 2. Drawing Review Service — from prototype to testable microservice
+## 2. Off-policy evaluation — decisions from logged data
 
-**[drawing-review-service](https://github.com/lyftium/drawing-review-service)** is a *public demonstrator* of an engineering-document review pipeline (detection → OCR → vision–language model → rule checks → human review). It is distinct from the private prototype described in §5.1.
+**[off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation)** — can a new policy be scored from another policy's logs before a live test? On the Open Bandit Dataset[^1], estimators on 1.37 M logged rounds recover the production CTR within **5.3–6.1 %** relative error (IPW / SNIPW / DR intervals cover the truth; DM's does not). Screener path: [`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md). Related notebook: [YOLO Road Damage: Honest Evaluation](https://www.kaggle.com/code/lyftium/yolo-road-damage-honest-evaluation).
+
+| | |
+|:--|:--|
+| **Problem** | Can we score a new policy from another policy’s logs before an A/B test? |
+| **Verify** | [`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md) · `pytest -q` · numbers = [`results.json`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/results.json) |
+| **Method** | DM / IPW / SNIPW / DR · 200 bootstrap CIs · GBDT reward model (2-fold cross-fit) · LinUCB replay |
+| **Status & limits** | Fashion e-commerce OBD (not aerospace). Estimated lift ≠ observed A/B. Full campaign needs the public zip (~15 min). |
+
+---
+
+## 3. Drawing Review Service — from prototype to testable microservice
+
+**[drawing-review-service](https://github.com/lyftium/drawing-review-service)** is a *public demonstrator* of an engineering-document review pipeline (detection → OCR → vision–language model → rule checks → human review). It is distinct from the private prototype described in §6.1.
 
 ```mermaid
 flowchart LR
@@ -140,7 +171,7 @@ flowchart LR
 
 ---
 
-## 3. LoRA Fine-Tune Recipe — baseline first, lineage kept
+## 4. LoRA Fine-Tune Recipe — baseline first, lineage kept
 
 **[lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe)** is a small-scale experiment in model adaptation: evaluate the base model → train a LoRA / QLoRA adapter → evaluate on the **same** held-out set → write a report and a run record. The task maps drawing annotations to structured JSON.
 
@@ -150,8 +181,8 @@ flowchart LR
 | **Architecture** | Single CLI loop; PEFT LoRA / QLoRA; answer-token loss only; lineage (git sha, config hash, data hash, dirty flag); optional `torchrun` DDP. |
 | **Verify** | `pip install -e . && pytest` (14 CPU tests) · `python -m lora_recipe.cli run --config configs/tiny-cpu.yaml` · results under `results/qwen-0.5b-lora/` |
 | **Results** | Table 2. Companion GPU notebook: [LoRA Fine-Tuning: Baseline vs Adapter](https://www.kaggle.com/code/lyftium/lora-fine-tuning-baseline-vs-adapter). |
-| **Status & limits** | The reported baseline is an **unprompted** base model (never shown the target schema). A prompted / few-shot baseline on the same split is **not done**. The `tiny-ddp` run proves **two-process DDP mechanics** on a tiny model (CPU gloo); it is **not** a multi-GPU training result. CUDA NCCL path is wired, not demonstrated here. |
-| **Next** | Prompted baseline; a real multi-GPU DDP run with the same lineage record. |
+| **Status & limits** | Published LoRA table still quotes the **unprompted** base for adapter comparison. Prompted modes on the **same** `test_data_hash`: exact_match unprompted **0.0** → fewshot **0.8** ([artefact](https://github.com/lyftium/lora-finetune-recipe/blob/main/results/prompted-baseline-qwen/eval-base-modes.json)). `tiny-ddp` = two-process **mechanics** (CPU gloo), not multi-GPU quality. |
+| **Next** | Prompted vs adapter on GPU; real multi-GPU DDP with the same lineage record. |
 
 <div align="center">
 <sub><b>Table 2.</b> Qwen2.5-0.5B on the held-out set (<code>results/qwen-0.5b-lora/</code>). Adapter vs unprompted base.</sub>
@@ -167,7 +198,7 @@ flowchart LR
 
 ---
 
-## 4. vLLM Serving Benchmark — throughput and latency
+## 5. vLLM Serving Benchmark — throughput and latency
 
 **[vLLM Serving Benchmark on T4](https://github.com/lyftium/vllm-serving-benchmark-t4)** ([Kaggle notebook](https://www.kaggle.com/code/lyftium/vllm-serving-benchmark-t4)) measures how serving levers move throughput and latency on commodity GPUs (2× Tesla T4, compute 7.5, fp16).
 
@@ -198,30 +229,30 @@ Reading: on this hardware, **batching** dominates; AWQ helps single-stream laten
 
 ---
 
-## 5. Supporting work
+## 6. Supporting work
 
-### 5.1 Private engineering prototype *(not a public result)*
+### 6.1 Private engineering prototype *(not a public result)*
 
-A local prototype of the drawing-review stack (detection, OCR, VLM, orchestration) exists privately and informed the public demonstrator in §2. **No private prototype metrics are published here** — they are not customer or programme results and must not be cited as such. §2 is the shareable, model-free rebuild of the service shape (contracts, gates, packaging).
+A local prototype of the drawing-review stack (detection, OCR, VLM, orchestration) exists privately and informed the public demonstrator in §3. **No private prototype metrics are published here** — they are not customer or programme results and must not be cited as such. §3 is the shareable, model-free rebuild of the service shape (contracts, gates, packaging).
 
-### 5.2 AI gateway and tool-calling agent
+### 6.2 AI gateway and tool-calling agent
 
 **[agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack)** — OpenAI-compatible gateway (auth by key hash, per-tenant quotas, failover, streaming pass-through, no prompt logging) and a bounded tool-calling agent (allowlisted tools, typed schemas, timeouts, approve-once for side effects, ISA refuse + injection posture tests). Gateway overhead ≈ **1.5 ms** p50 at concurrency 1 against an instant mock (median of 3 × 1 500 requests, laptop). Kind Ready (mock-llm / gateway / agent) on shared `drw` with live agent-run evidence: ISA completed @ 11 km; `submit_simulation_job` → awaiting_approval → accepted → duplicate ([transcript](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/evidence/kind-apply/agent-run-20261104-190455.txt), [`DEMO`](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/DEMO.md)). OpenShift AI **not** applied live. CI green; GHCR digest `sha256:660b84b00aa62e883af7c5f487b312c7919d69000b1d4ad2f52a1f9ffd3164d8`.
 
-### 5.3 Off-policy evaluation
 
-**[off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation)** — can a new policy be scored from another policy's logs before a live test? On the Open Bandit Dataset[^1], estimators on 1.37 M logged rounds recover the production CTR within **5.3–6.1 %** relative error (IPW / SNIPW / DR intervals cover the truth; DM's does not). Screener path: [`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md). Related notebook: [YOLO Road Damage: Honest Evaluation](https://www.kaggle.com/code/lyftium/yolo-road-damage-honest-evaluation).
-
-### 5.4 Other unpublished work
+### 6.3 Other unpublished work
 
 Unpublished explorations (PLM/MCP wiring, event-stream analytics). Available as walkthroughs on request — not public artefacts.
 
 ---
 
 
-**Profile tip for readers:** pin order DRS → vLLM → LoRA → AGS → [OPE](https://github.com/lyftium/off-policy-bandit-evaluation) (add OPE as 5th pin if missing). Each flagship has a [`DEMO.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md) screener path. Start with [drawing-review-service](https://github.com/lyftium/drawing-review-service), then [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4), then [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe).
+**Profile tip — pins (user UI):**
+- **Data scientist roles:** [OPE](https://github.com/lyftium/off-policy-bandit-evaluation) → LoRA → DRS → vLLM → AGS (add **OPE** if missing).
+- **Integrator roles:** DRS → vLLM → LoRA → AGS → OPE.
+Each flagship has a `docs/DEMO.md` screener path. Kaggle: [lyftium](https://www.kaggle.com/lyftium).
 
-## 6. Scope and limits
+## 7. Scope and limits
 
 | Claim one might infer | What is actually shown |
 |:--|:--|
@@ -230,6 +261,7 @@ Unpublished explorations (PLM/MCP wiring, event-stream analytics). Available as 
 | “Production CI / GHCR” | CI **enabled** on flagships; DRS+AGS digests recorded. Live GPU OpenShift apply still not claimed |
 | “Serving numbers” | vLLM study is **single-run** exploratory on Kaggle T4s |
 | “Private prototype metrics” | Not published; personal local run only — **not** employer/customer results |
+| “Causal / A/B lift shipped” | OPE gives **estimated** lift + CIs on OBD fashion logs — **not** a live A/B or aerospace study |
 
 ---
 
