@@ -17,8 +17,9 @@
 [**3 · Drawing review**](#3-drawing-review-service--from-prototype-to-testable-microservice) ·
 [**4 · Fine-tuning**](#4-lora-finetune-recipe--baseline-first-lineage-kept) ·
 [**5 · Inference**](#5-vllm-serving-benchmark--throughput-and-latency) ·
-[**6 · Supporting**](#6-supporting-work) ·
-[**7 · Limits**](#7-scope-and-limits) ·
+[**6 · Gateway**](#6-ai-gateway--tool-calling-agent) ·
+[**7 · Supporting**](#7-supporting-work) ·
+[**8 · Limits**](#8-scope-and-limits) ·
 [**Kaggle**](https://www.kaggle.com/lyftium)
 
 </div>
@@ -30,11 +31,12 @@
 |:--|:--|:--|
 | **Data scientist** | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) · [`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md) | 1.37 M logs · bootstrap CIs · time split · estimated lift ≠ A/B |
 | **AI integrator** | [drawing-review-service](https://github.com/lyftium/drawing-review-service) · [`DEMO`](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md) | Live CI · Kind Ready · GHCR · OpenShift AI **not** live |
-| **Also pin** | LoRA · vLLM T4 · agent-gateway-stack | Each has `docs/DEMO.md` · [Kaggle](https://www.kaggle.com/lyftium) |
+| **LLM serving + gateway** | [vLLM T4](https://github.com/lyftium/vllm-serving-benchmark-t4) · [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack) · DRS KServe | Measured levers (single-run) · Kind gateway+mock · manifests **not** live GPU |
+| **Also** | LoRA · [Kaggle](https://www.kaggle.com/lyftium) | Each flagship has `docs/DEMO.md` |
 
 > **Abstract.** Two hiring lenses, one public body of work. As a **data scientist**, the core habit is honest evaluation before a decision: baselines on the same split, uncertainty (bootstrap CIs), chronological hold-outs, and refusing a precise-but-wrong estimator. As an **AI integrator**, the same habit continues into packaging: typed APIs, gates, images, Kind-proven Kubernetes prep. Primary DS evidence: off-policy evaluation on **1.37 M** real bandit rounds. Primary integration evidence: drawing-review microservice, LoRA recipe with prompted baseline, vLLM T4 protocol study, AI gateway + approve-once agent. Every project states what was measured, how to reproduce it, and what was not run live.
 >
-> **Keywords:** data science · off-policy evaluation · baselines · confidence intervals · model evaluation · AI integration · LLM / VLM serving · LoRA · MLOps preparation · traceability · engineering workflows
+> **Keywords:** data science · off-policy evaluation · baselines · confidence intervals · model evaluation · AI integration · LLM / VLM serving · AI gateway · LoRA · MLOps preparation · traceability · engineering workflows
 >
 > **FR (signaux):** data scientist · évaluation hors-politique / intervalles de confiance · baselines · aide à la décision · intégration de composants IA · non-régression · serving vLLM · fine-tuning LoRA · préparation OpenShift AI / KServe · traçabilité · supervision humaine — preuves en anglais; pas de cluster OpenShift live.
 
@@ -78,7 +80,7 @@ Five habits recur:
 
 **Data scientist track.** Start at [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) ([`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md)): recover production CTR from 1.37 M logged rounds within 5.3–6.1 % relative error; IPW/SNIPW/DR CIs cover truth, DM’s does not; popularity beats a weak GBDT-greedy on a time split (~2.1× estimated lift — candidate for A/B, not a shipped result). Then [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) (unprompted exact_match 0.0 → fewshot 0.8 on the same `test_data_hash`) and [YOLO Road Damage: Honest Evaluation](https://www.kaggle.com/code/lyftium/yolo-road-damage-honest-evaluation).
 
-**Integrator track.** Start at [drawing-review-service](https://github.com/lyftium/drawing-review-service) ([`DEMO`](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md)), then vLLM T4 protocol, LoRA, [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack). Limits: Kind Ready ≠ live GPU OpenShift; DDP lab ≠ multi-node NCCL; single-run serving ≠ SLO.
+**Integrator track.** Start at [drawing-review-service](https://github.com/lyftium/drawing-review-service) ([`DEMO`](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md)) → measure levers on [vLLM T4](https://github.com/lyftium/vllm-serving-benchmark-t4) → put [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack) in front (authz / quotas / failover / approve-once) → DRS/AGS KServe manifests for cluster prep. Then LoRA. Limits: Kind Ready ≠ live GPU OpenShift; DDP lab ≠ multi-node NCCL; single-run serving ≠ SLO.
 
 **FR (90 s):** Data scientist — évaluation hors-politique, IC bootstrap, baselines, aide à la décision avant A/B. Intégrateur — contrats/API/tests/image, serving mesuré, gateway + approve-once. Preuves en anglais; OpenShift AI préparé, pas live.
 
@@ -96,6 +98,7 @@ How an **integrator** screener maps skills to repositories — without inventing
 | Fine-tune + lineage + resume | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) · [`DEMO`](https://github.com/lyftium/lora-finetune-recipe/blob/main/docs/DEMO.md) | CPU tests + prompted baseline artefact |
 | DDP token-weighted loss (math, not NCCL) | LoRA `labs/ddp-token-weighting/` | Deterministic CPU NumPy lab |
 | Gateway authz / quotas / agent allowlist | [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack) · [`DEMO`](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/DEMO.md) | Tests + GHCR + Kind Ready + agent-run (ISA / approve-once) |
+| Serving path (one track) | DRS `deploy/kserve/` ↔ [vLLM bench](https://github.com/lyftium/vllm-serving-benchmark-t4) ↔ [AGS](https://github.com/lyftium/agent-gateway-stack) | Manifests · measured levers · edge controls (mock Kind; GPU OpenShift not live) |
 | Pending-first diagnosis (events before “add GPUs”) | DRS [`docs/runbook.md`](https://github.com/lyftium/drawing-review-service/blob/main/docs/runbook.md) | Decision tree + Kind rollback transcript |
 | Model ingest (no casual `trust_remote_code`) | LoRA [`docs/model-ingest.md`](https://github.com/lyftium/lora-finetune-recipe/blob/main/docs/model-ingest.md) | Policy + pytest |
 | Digest ≠ signature ≠ approval | DRS [`checklists/release-approval.md`](https://github.com/lyftium/drawing-review-service/blob/main/checklists/release-approval.md) | Release checklist (engineering, not a legal claim) |
@@ -135,7 +138,7 @@ How a **data scientist** screener maps skills — numbers only from published ar
 
 ## 3. Drawing Review Service — from prototype to testable microservice
 
-**[drawing-review-service](https://github.com/lyftium/drawing-review-service)** is a *public demonstrator* of an engineering-document review pipeline (detection → OCR → vision–language model → rule checks → human review). It is distinct from the private prototype described in §6.1.
+**[drawing-review-service](https://github.com/lyftium/drawing-review-service)** is a *public demonstrator* of an engineering-document review pipeline (detection → OCR → vision–language model → rule checks → human review). It is distinct from the private prototype described in §7.1.
 
 ```mermaid
 flowchart LR
@@ -234,20 +237,30 @@ flowchart LR
 
 Reading: on this hardware, **batching** dominates; AWQ helps single-stream latency and memory but costs throughput under load and accuracy on the small model; tensor parallelism is for models that do not fit on one GPU, not for speed here.
 
+**Where this sits.** Protocol informs what to ask of a KServe / InferenceService path in DRS (and AGS overlays). The OpenAI-compatible **gateway** in front of a runtime is §6 — Kind-proven against mock-llm, not a live GPU SLO.
+
 ---
 
-## 6. Supporting work
-
-### 6.1 Private engineering prototype *(not a public result)*
-
-A local prototype of the drawing-review stack (detection, OCR, VLM, orchestration) exists privately and informed the public demonstrator in §3. **No private prototype metrics are published here** — they are not customer or programme results and must not be cited as such. §3 is the shareable, model-free rebuild of the service shape (contracts, gates, packaging).
-
-### 6.2 AI gateway and tool-calling agent
+## 6. AI gateway & tool-calling agent
 
 **[agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack)** — OpenAI-compatible gateway (auth by key hash, per-tenant quotas, failover, streaming pass-through, no prompt logging) and a bounded tool-calling agent (allowlisted tools, typed schemas, timeouts, approve-once for side effects, ISA refuse + injection posture tests). Gateway overhead ≈ **1.5 ms** p50 at concurrency 1 against an instant mock (median of 3 × 1 500 requests, laptop). Kind Ready (mock-llm / gateway / agent) on shared `drw` with live agent-run evidence: ISA completed @ 11 km; `submit_simulation_job` → awaiting_approval → accepted → duplicate ([transcript](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/evidence/kind-apply/agent-run-20261104-190455.txt), [`DEMO`](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/DEMO.md)). OpenShift AI **not** applied live. CI green; GHCR digest `sha256:660b84b00aa62e883af7c5f487b312c7919d69000b1d4ad2f52a1f9ffd3164d8`.
 
+| | |
+|:--|:--|
+| **Problem** | Clients re-implement keys, quotas, routing and opaque tool loops. |
+| **Verify** | [`DEMO`](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/DEMO.md) · pytest (allowlist / approve-once / ISA) · Kind Ready + agent-run transcript · GHCR digest |
+| **Serving link** | Gateway is the OpenAI-compatible front door; measured levers live in [vLLM T4](https://github.com/lyftium/vllm-serving-benchmark-t4); KServe `ServingRuntime` / InferenceService overlays are prepared in AGS + DRS (**not** live GPU). |
+| **Status & limits** | Kind + **mock-llm** proves plumbing. Quotas are per-replica. OpenShift AI **not** applied live. |
 
-### 6.3 Other unpublished work
+
+## 7. Supporting work
+
+### 7.1 Private engineering prototype *(not a public result)*
+
+A local prototype of the drawing-review stack (detection, OCR, VLM, orchestration) exists privately and informed the public demonstrator in §3. **No private prototype metrics are published here** — they are not customer or programme results and must not be cited as such. §3 is the shareable, model-free rebuild of the service shape (contracts, gates, packaging).
+
+
+### 7.2 Other unpublished work
 
 Unpublished explorations (PLM/MCP wiring, event-stream analytics). Available as walkthroughs on request — not public artefacts.
 
@@ -256,10 +269,10 @@ Unpublished explorations (PLM/MCP wiring, event-stream analytics). Available as 
 
 **Profile tip — pins (user UI):**
 - **Data scientist roles:** [OPE](https://github.com/lyftium/off-policy-bandit-evaluation) → LoRA → DRS → vLLM → AGS (add **OPE** if missing).
-- **Integrator roles:** DRS → vLLM → LoRA → AGS → OPE.
+- **Integrator / serving roles:** DRS → vLLM → AGS → LoRA → OPE (gateway before LoRA).
 Each flagship has a `docs/DEMO.md` screener path. Kaggle: [lyftium](https://www.kaggle.com/lyftium).
 
-## 7. Scope and limits
+## 8. Scope and limits
 
 | Claim one might infer | What is actually shown |
 |:--|:--|
