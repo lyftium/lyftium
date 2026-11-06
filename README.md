@@ -1,4 +1,4 @@
-# Pierre
+#
 
 Paris · FR / EN · [Kaggle](https://www.kaggle.com/lyftium) · [notes](https://lyftium.github.io)
 
