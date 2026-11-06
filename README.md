@@ -1,15 +1,15 @@
-# Pierre — Data Scientist · Applied ML & AI Engineering
+# Pierre — Data Scientist & AI Engineer
 
-Aerospace engineering background; data science training with Liora / Mines Paris – PSL.  
+Aerospace engineering background. I evaluate models and decision policies, then build the services needed to use them.
+
 Paris · French / English.
-
-I work on both model evaluation and the software needed to use models: scoring a policy from logged data, checking whether fine-tuning helps beyond prompting, or turning a document pipeline into an API another engineer can run.
 
 Looking for data science and applied ML / AI engineering roles.
 
-[Kaggle](https://www.kaggle.com/lyftium) · [Notes](https://lyftium.github.io) · [GitHub](https://github.com/lyftium)
+[Kaggle](https://www.kaggle.com/lyftium) · [Notes](https://lyftium.github.io)
 
-<!-- Add when ready: [CV](...) · [LinkedIn](...) · [Email](mailto:...) -->
+<!-- Add when you have them: [CV](...) · [LinkedIn](...) · [Email](mailto:...) -->
+<!-- Add the exact program name and whether it is completed or in progress. -->
 
 ## Selected projects
 
@@ -17,11 +17,13 @@ Looking for data science and applied ML / AI engineering roles.
 
 [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation)
 
-Can we evaluate a recommendation policy before running an A/B test?
+Can we score a new recommendation policy from someone else’s logs before an A/B test?
 
-I compared direct, importance-weighted, and doubly robust estimators on **1.37 million** rounds from the Open Bandit Dataset (uniform-random logs → estimate the production Bernoulli-TS policy’s CTR), with bootstrap confidence intervals and a chronological split. Digits live in [`results.json`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/results.json).
+I implemented the estimators (direct method, IPW, self-normalised IPW, doubly robust), the chronological split, and the bootstrap intervals. The Open Bandit Dataset supplies the logs; the `obp` library is only used for the production policy’s action distribution.
 
-The useful finding: Direct Method gave a **very narrow** interval that still **missed** the reference CTR, while IPW / SNIPW / DR intervals covered it (about **5.3–6.1 %** relative error). A simple popularity policy looked stronger on the hold-out — that is a reason to run an experiment, not a result I would ship from the estimate alone.
+On 1.37 million uniform-random rounds, the direct method’s confidence interval was tiny and still missed the production CTR. The weighted estimators’ intervals covered it. A simple popularity policy looked stronger on the hold-out — that is a reason to run an experiment, not a result I would ship from the estimate.
+
+Offline estimate only; no live A/B. Fashion e-commerce logs, not a customer system.
 
 [Walkthrough](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md)
 
@@ -29,9 +31,9 @@ The useful finding: Direct Method gave a **very narrow** interval that still **m
 
 [drawing-review-service](https://github.com/lyftium/drawing-review-service)
 
-I built a FastAPI demonstrator for an engineering-drawing review workflow: pluggable inference backends, structured responses, evaluation checks, and a container image.
+A local drawing-review script is hard to share or score. I built a FastAPI service around that workflow: request and response contracts, golden-set checks, and a container that runs as a non-root user.
 
-CPU stubs let another engineer run the tests without downloading model weights. The service has been exercised on a local Kind cluster (including a rollback transcript); the OpenShift AI / KServe manifests are in the repo and schema-checked, but I have **not** applied them on a live GPU cluster.
+CPU stubs mean another engineer can run the tests without downloading model weights. I tested the deployment on a local Kind cluster, including a rollback. The OpenShift AI / KServe files are in the repo and schema-checked; I have not applied them on a live GPU cluster.
 
 [Walkthrough](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md)
 
@@ -39,18 +41,18 @@ CPU stubs let another engineer run the tests without downloading model weights. 
 
 [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4)
 
-I benchmarked vLLM on two Tesla T4 GPUs — batching, quantization, tensor parallelism, and prefix caching — and kept the raw campaign in [`results.json`](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/results.json).
+I wanted to see which serving settings actually move throughput and latency together, so I ran one vLLM campaign on two Tesla T4 GPUs and kept the protocol next to the numbers.
 
-One result that changed how I talk about quantization: for the tested **1.5B** model, AWQ was about **1.6×** faster than fp16 at one sequence, but about **0.5×** at 128 sequences. Continuous batching on the small model moved generated tok/s by roughly **35×** in that same campaign. These are exploratory **single-run** measurements, not production capacity estimates.
+For the 1.5B model I tested, AWQ was faster than fp16 at one sequence and slower at 128 sequences. Tensor parallelism also failed to help the small model under load — the extra communication cost was larger than the split. These are single-run measurements on that hardware, not a capacity plan.
 
 [Walkthrough](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/docs/DEMO.md)
 
 ## Other work
 
-- [LoRA fine-tuning](https://github.com/lyftium/lora-finetune-recipe) — same held-out set for base and adapter; few-shot prompting alone reached exact_match **0.8**, so the unprompted base is a weak baseline for judging the adapter.
-- [AI gateway](https://github.com/lyftium/agent-gateway-stack) — key auth, quotas, failover, and approve-once tool calls (Kind + mock LLM; not a live GPU cluster).
+- [LoRA fine-tuning](https://github.com/lyftium/lora-finetune-recipe) — same held-out set for the base model and the adapter. Few-shot prompting alone reached exact match 0.80, so I do not treat the unprompted base as the baseline for the adapter.
+- [AI gateway](https://github.com/lyftium/agent-gateway-stack) — API keys, quotas, failover, and an approval step before a tool call with side effects. Overhead was measured against a mock backend, not a live inference workload.
 - [Kaggle notebooks](https://www.kaggle.com/lyftium)
 
 ## Tools used in these projects
 
-Python, scikit-learn / GBDT, PyTorch, FastAPI, Docker, Kubernetes (Kind), vLLM, PEFT / Hugging Face.
+Python, gradient-boosted trees, PyTorch, FastAPI, Docker, Kubernetes (Kind), vLLM, PEFT / Hugging Face.
