@@ -33,7 +33,7 @@ Offline estimate only; no live A/B. Fashion e-commerce logs, not a customer syst
 
 A local drawing-review script is hard to share or score. I built a FastAPI service around that workflow: request and response contracts, golden-set checks, and a container that runs as a non-root user.
 
-CPU stubs mean another engineer can run the tests without downloading model weights. I tested the deployment on a local Kind cluster, including a rollback. The OpenShift AI / KServe files are in the repo and schema-checked; I have not applied them on a live GPU cluster.
+CPU stubs mean another engineer can run the tests without downloading model weights. I tested the Kubernetes deployment on a local Kind cluster, including a rollback; I have not recorded a GPU-backed deployment.
 
 [Walkthrough](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md)
 
