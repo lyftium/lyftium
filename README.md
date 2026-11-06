@@ -29,22 +29,22 @@
 
 | 30-second glance | Start here | Proof ceiling |
 |:--|:--|:--|
-| **Data scientist** | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) · [`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md) | 1.37 M logs · bootstrap CIs · time split · estimated lift ≠ A/B |
-| **AI integrator** | [drawing-review-service](https://github.com/lyftium/drawing-review-service) · [`DEMO`](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md) | Live CI · Kind Ready · GHCR · OpenShift AI **not** live |
+| **Data science** | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) · [`DEMO`](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md) | 1.37 M logs · bootstrap CIs · time split · estimated lift ≠ A/B |
+| **AI integrator** | [drawing-review-service](https://github.com/lyftium/drawing-review-service) · [`DEMO`](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md) | Live CI · Kind Ready · GHCR  |
 | **LLM serving + gateway** | [vLLM T4](https://github.com/lyftium/vllm-serving-benchmark-t4) · [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack) · DRS KServe | Measured levers (single-run) · Kind gateway+mock · manifests **not** live GPU |
 | **Also** | LoRA · [Kaggle](https://www.kaggle.com/lyftium) | Each flagship has `docs/DEMO.md` |
 
-> **Abstract.** Two hiring lenses, one public body of work. As a **data scientist**, the core habit is honest evaluation before a decision: baselines on the same split, uncertainty (bootstrap CIs), chronological hold-outs, and refusing a precise-but-wrong estimator. As an **AI integrator**, the same habit continues into packaging: typed APIs, gates, images, Kind-proven Kubernetes prep. Primary DS evidence: off-policy evaluation on **1.37 M** real bandit rounds. Primary integration evidence: drawing-review microservice, LoRA recipe with prompted baseline, vLLM T4 protocol study, AI gateway + approve-once agent. Every project states what was measured, how to reproduce it, and what was not run live.
+> **Abstract.** As a **data scientist**, the core habit is honest evaluation before a decision: baselines on the same split, uncertainty (bootstrap CIs), chronological hold-outs, and refusing a precise-but-wrong estimator. As an **AI integrator**, the same habit continues into packaging: typed APIs, gates, images, Kind-proven Kubernetes prep. Primary DS evidence: off-policy evaluation on **1.37 M** real bandit rounds. Primary integration evidence: drawing-review microservice, LoRA recipe with prompted baseline, vLLM T4 protocol study, AI gateway + approve-once agent. Every project states what was measured, how to reproduce it, and what was not run live.
 >
 > **Keywords:** data science · off-policy evaluation · baselines · confidence intervals · model evaluation · AI integration · LLM / VLM serving · AI gateway · LoRA · MLOps preparation · traceability · engineering workflows
 >
-> **FR (signaux):** data scientist · évaluation hors-politique / intervalles de confiance · baselines · aide à la décision · intégration de composants IA · non-régression · serving vLLM · fine-tuning LoRA · préparation OpenShift AI / KServe · traçabilité · supervision humaine — preuves en anglais; pas de cluster OpenShift live.
+> **FR (signaux):** data scientist · évaluation hors-politique / intervalles de confiance · baselines · aide à la décision · intégration de composants IA · non-régression · serving vLLM · fine-tuning LoRA · traçabilité
 
 ---
 
 
 <details>
-<summary>Tooling reflected in the public artefacts (OpenShift AI = manifests prepared, not a live-cluster claim)</summary>
+<summary>Tooling reflected in the public artefacts </summary>
 
 <sub>
 <img src="https://skillicons.dev/icons?i=py,pytorch,docker,kubernetes,linux,bash,fastapi,prometheus,git&perline=9" alt="Python, PyTorch, Docker, Kubernetes, Linux, Bash, FastAPI, Prometheus, Git" />
