@@ -6,7 +6,7 @@ I work on two connected questions: does a model or decision policy improve on it
 
 [Project notes](https://lyftium.github.io) · [Kaggle](https://www.kaggle.com/lyftium)
 
-**Education:** Data Scientist program — Liora, with Mines Paris – PSL
+**Education:** Data Scientist program — Mines Paris – PSL
 
 ## Selected work
 
