@@ -1,53 +1,57 @@
 # Pierre — Data Scientist & AI Engineer
 
-Aerospace engineering background. I evaluate models and decision policies, then build the services needed to use them.
+Paris, France · French / English
 
-Paris · French / English.
+I work on two connected questions: does a model or decision policy improve on its baseline, and can another engineer run the service around it? My projects combine experimental evaluation with APIs, containers, and measured inference trade-offs. I am looking for data science, applied ML, and AI integration roles.
 
-Looking for data science and applied ML / AI engineering roles.
+[Project notes](https://lyftium.github.io) · [Kaggle](https://www.kaggle.com/lyftium)
 
-[Kaggle](https://www.kaggle.com/lyftium) · [Notes](https://lyftium.github.io)
+**Education:** Data Scientist program — Liora, with Mines Paris – PSL
 
-## Selected projects
+## Selected work
 
-### Turning a drawing-review prototype into a service
+### Packaging a drawing-review pipeline as a service
 
 [drawing-review-service](https://github.com/lyftium/drawing-review-service)
 
-A drawing-review script that only runs on one machine is hard to share or score. I built the FastAPI contracts, the golden-set checks, and a container that runs as a non-root user. CPU stubs stand in for the models, so the tests do not download weights.
+How do you make a drawing-analysis workflow testable when its model backends and GPU environment are not available to every engineer?
 
-I applied that image on a local Kind cluster and recorded a rollback. Manifests aimed at a GPU cluster are schema-checked only.
+I built a FastAPI demonstrator with typed responses, interchangeable inference backends, golden-set evaluation, and business-defect gates. The container and Kubernetes deployment can be exercised independently of model weights: CPU stubs keep the API and evaluation path runnable, while recorded Kind checks cover a local deployment and rollback. Separating extraction metrics from review findings makes a noisy backend visible even when some extraction scores still look good.
 
-[Walkthrough](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md)
+**Limit:** evaluation uses 12 synthetic drawings and stub backends, not real-model quality or a GPU-backed deployment.
 
-### Measuring LLM serving trade-offs on T4 GPUs
+[Run the demo](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md) · [Evidence](https://github.com/lyftium/drawing-review-service/tree/main/docs/evidence)
+
+### Measuring LLM serving trade-offs
 
 [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4)
 
-I ran one vLLM campaign on two Tesla T4 GPUs and kept the protocol next to the numbers.
+When does a serving optimization stop helping as load increases? I compared batching, AWQ, tensor parallelism, and prefix caching with vLLM 0.6.6.post1 on two Tesla T4 GPUs, keeping the measurements and conditions alongside the findings.
 
-For the 1.5B model, AWQ was about 1.6× fp16 at one sequence and about 0.5× at 128 sequences. Tensor parallelism was slower than one GPU once the batch was large. One run per cell, on that hardware.
+For Qwen2.5-1.5B-Instruct, AWQ throughput was 1.61× fp16 at one sequence but 0.50× at 128 sequences. The useful lesson was not “quantize for speed”: the right choice depended on load, and the small quality probe moved too. I now treat model, workload, and concurrency as part of any serving result.
 
-[Walkthrough](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/docs/DEMO.md)
+**Limit:** one run per configuration, and the benchmark driver, full workload, and immutable model revisions are not published.
 
-### Evaluating recommendation policies from logged data
+[Results and inspection walkthrough](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/docs/DEMO.md)
+
+### Evaluating policies before an A/B test
 
 [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation)
 
-Can we score a new recommendation policy from someone else’s logs before an A/B test?
+I used 1.37 million logged interactions from the Open Bandit Dataset to compare direct-method, IPW, self-normalized IPW, and doubly robust estimators, with bootstrap intervals and a chronological policy holdout.
 
-I implemented direct method, IPW, self-normalised IPW, and doubly robust estimators, plus the chronological split and the bootstrap intervals. The Open Bandit Dataset supplies the logs. `obp` is only used for the production policy’s action distribution.
+A narrow direct-method interval missed the independently measured reference CTR, while the weighted estimators covered it. A later experiment identified a popularity policy worth testing rather than declaring a win from offline logs. The chronological split addresses time leakage in policy evaluation; the reward model’s cross-fitting is a separate mechanism.
 
-On 1.37 million uniform-random rounds, the direct method’s interval was tiny and missed the production click-through rate. The weighted estimators’ intervals covered it. A popularity policy looked stronger on the hold-out; that is a reason to run an experiment, not a shipped result. No live A/B.
+**Limit:** these are offline estimates on public fashion-click data, not observed A/B lift.
 
-[Walkthrough](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md)
+[Results and reproduction](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md)
 
-## Other work
+## Supporting projects
 
-- [LoRA fine-tuning](https://github.com/lyftium/lora-finetune-recipe) — few-shot prompting reached exact match 0.80 on 100 held-out examples. The adapter’s 0.97 is against an unprompted base, not against that prompt.
-- [AI gateway](https://github.com/lyftium/agent-gateway-stack) — key auth, per-replica quotas, failover, and a demo approval that records a queue intent. The latency figure is against a mock model.
-- [Kaggle notebooks](https://www.kaggle.com/lyftium)
+- **[LoRA fine-tuning recipe](https://github.com/lyftium/lora-finetune-recipe):** prompted baselines, adapter training, and run lineage. Few-shot prompting reached 0.80 exact match; the recorded 0.97 adapter result used a different prompt mode, so it is not a controlled gain over that baseline.
+- **[AI gateway and tool agent](https://github.com/lyftium/agent-gateway-stack):** key-hash authentication, per-replica quotas, failover, and an approval-gated tool-call demonstrator. Overhead was measured against a mock backend; approval records an intent without separate operator authentication.
+- **GOLLAMC:** final project for the Liora Data Scientist program with Mines Paris – PSL. The repository is private; a demo is available on request.
 
-## Tools used in these projects
+## Tools demonstrated in these projects
 
-Python, gradient-boosted trees, PyTorch, FastAPI, Docker, Kubernetes (Kind), vLLM, PEFT.
+Python, scikit-learn, PyTorch, PEFT, FastAPI, Docker, Kubernetes (Kind), and vLLM.
