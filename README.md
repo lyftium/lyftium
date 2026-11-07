@@ -50,18 +50,7 @@ A narrow direct-method interval missed the independently measured reference CTR,
 
 - **[LoRA fine-tuning recipe](https://github.com/lyftium/lora-finetune-recipe):** prompted baselines, adapter training, and run lineage. Few-shot prompting reached 0.80 exact match; the recorded 0.97 adapter result used a different prompt mode, so it is not a controlled gain over that baseline.
 - **[AI gateway and tool agent](https://github.com/lyftium/agent-gateway-stack):** key-hash authentication, per-replica quotas, failover, and an approval-gated tool-call demonstrator. Overhead was measured against a mock backend; approval records an intent without separate operator authentication.
-- **GOLLAMC:** final project for the Liora Data Scientist program with Mines Paris – PSL. The repository is private; a demo is available on request.
-
-## Benchmarks
-
-| Area | What I measured | Evidence |
-|---|---|---|
-| LLM serving | 1.61× AWQ/fp16 throughput for 1.5B at one sequence, but 0.50× at 128 | [vLLM benchmark](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/BENCHMARK.md) |
-| Off-policy evaluation | DM missed the independently logged reference CTR; IPW/SNIPW/DR intervals covered it | [1.37M-round study](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/BENCHMARK.md) |
-| Fine-tuning | Few-shot base 0.80; adapter 0.97 with a different prompt, so not a controlled +0.17 gain | [LoRA reports](https://github.com/lyftium/lora-finetune-recipe/blob/main/BENCHMARK.md) |
-| Object detection | 0.526 mAP@50 on 402 held-out public road images | [YOLO evaluation](https://github.com/lyftium/road-damage-yolo-evaluation/blob/main/BENCHMARK.md) |
-| Service overhead | +1.65 ms p50 non-stream and +1.54 ms p50 stream at concurrency 1, against an instant mock | [Gateway benchmark](https://github.com/lyftium/agent-gateway-stack/blob/main/BENCHMARK.md) |
-| Evaluation harness | Noisy synthetic stubs failed review gates despite 0.9419 detection recall | [Drawing-service evaluation](https://github.com/lyftium/drawing-review-service/blob/main/BENCHMARK.md) |
+- **[Road-damage detection](https://github.com/lyftium/road-damage-yolo-evaluation):** YOLO11n on 402 public held-out images, mAP@50 0.526. The same split was also used to choose confidence thresholds, so this is an optimistic validation result from one time-capped run, not an independent test.
 
 ## Tools demonstrated in these projects
 
