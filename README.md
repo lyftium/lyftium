@@ -1,12 +1,22 @@
 # Pierre — Data Scientist & AI Engineer
 
-Paris, France · French / English
+Paris, France · Français / English · open to CDI / freelance collaboration in FR
 
-I work on two connected questions: does a model or decision policy improve on its baseline, and can another engineer run the service around it? My projects combine experimental evaluation with APIs, containers, and measured inference trade-offs. I am looking for data science, applied ML, and AI integration roles.
+I evaluate whether a model or decision policy beats its baseline, then package the surrounding service so another engineer can run and test it. Looking for **data science**, **applied ML**, and **AI integration** roles (services, evaluation, LLM serving).
 
-[Project notes](https://lyftium.github.io) · [Kaggle](https://www.kaggle.com/lyftium)
+[Portfolio site](https://lyftium.github.io) · [Kaggle](https://www.kaggle.com/lyftium)
 
-**Education:** Data Scientist program — Liora, with Mines Paris – PSL
+**Formation :** programme Data Scientist — Liora, avec Mines Paris – PSL
+
+## 30-second map
+
+| Focus | Repo | One-click |
+|---|---|---|
+| Package a review pipeline as a service | [drawing-review-service](https://github.com/lyftium/drawing-review-service) | [Demo](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md) · [Evidence](https://github.com/lyftium/drawing-review-service/tree/main/docs/evidence) |
+| Measure LLM serving trade-offs | [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4) | [Demo](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/docs/DEMO.md) · [Results](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/results.json) |
+| Evaluate policies before an A/B test | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) | [Demo](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md) · [Results](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/results.json) |
+| Prompted baseline before LoRA | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) | [Demo](https://github.com/lyftium/lora-finetune-recipe/blob/main/docs/DEMO.md) |
+| Gateway + approval-gated tools | [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack) | [Demo](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/DEMO.md) |
 
 ## Selected work
 
@@ -48,8 +58,8 @@ A narrow direct-method interval missed the independently measured reference CTR,
 
 ## Supporting projects
 
-- **[LoRA fine-tuning recipe](https://github.com/lyftium/lora-finetune-recipe):** prompted baselines, adapter training, and run lineage. Few-shot prompting reached 0.80 exact match; the recorded 0.97 adapter result used a different prompt mode, so it is not a controlled gain over that baseline.
-- **[AI gateway and tool agent](https://github.com/lyftium/agent-gateway-stack):** key-hash authentication, per-replica quotas, failover, and an approval-gated tool-call demonstrator. Overhead was measured against a mock backend; approval records an intent without separate operator authentication.
+- **[LoRA fine-tuning recipe](https://github.com/lyftium/lora-finetune-recipe):** prompted baselines, adapter training, and run lineage. Few-shot prompting reached 0.80 exact match; the recorded 0.97 adapter result used a different prompt mode, so it is not a controlled gain over that baseline. [Demo](https://github.com/lyftium/lora-finetune-recipe/blob/main/docs/DEMO.md)
+- **[AI gateway and tool agent](https://github.com/lyftium/agent-gateway-stack):** key-hash authentication, per-replica quotas, failover, and an approval-gated tool-call demonstrator. Overhead was measured against a mock backend; approval records an intent without separate operator authentication. [Demo](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/DEMO.md)
 - **[Road-damage detection](https://github.com/lyftium/road-damage-yolo-evaluation):** YOLO11n on 402 public held-out images, mAP@50 0.526. The same split was also used to choose confidence thresholds, so this is an optimistic validation result from one time-capped run, not an independent test.
 
 ## Tools demonstrated in these projects
