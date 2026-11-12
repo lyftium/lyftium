@@ -13,9 +13,9 @@ I evaluate whether a model or decision policy beats its baseline, then package t
 | Focus | Repo | One-click |
 |---|---|---|
 | Package a review pipeline as a service | [drawing-review-service](https://github.com/lyftium/drawing-review-service) | [Demo](https://github.com/lyftium/drawing-review-service/blob/main/docs/DEMO.md) · [Evidence](https://github.com/lyftium/drawing-review-service/tree/main/docs/evidence) |
-| Measure LLM serving trade-offs | [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4) | [Demo](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/docs/DEMO.md) · [Results](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/results.json) |
+| Measure LLM serving trade-offs | [vllm-serving-benchmark-t4](https://github.com/lyftium/vllm-serving-benchmark-t4) | [Demo](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/docs/DEMO.md) · [Results](https://github.com/lyftium/vllm-serving-benchmark-t4/blob/main/results.json) · [Kaggle](https://www.kaggle.com/code/lyftium/vllm-serving-benchmark-t4) |
 | Evaluate policies before an A/B test | [off-policy-bandit-evaluation](https://github.com/lyftium/off-policy-bandit-evaluation) | [Demo](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/docs/DEMO.md) · [Results](https://github.com/lyftium/off-policy-bandit-evaluation/blob/main/results.json) |
-| Prompted baseline before LoRA | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) | [Demo](https://github.com/lyftium/lora-finetune-recipe/blob/main/docs/DEMO.md) |
+| Prompted baseline before LoRA | [lora-finetune-recipe](https://github.com/lyftium/lora-finetune-recipe) | [Demo](https://github.com/lyftium/lora-finetune-recipe/blob/main/docs/DEMO.md) · [Kaggle](https://www.kaggle.com/code/lyftium/lora-fine-tuning-baseline-vs-adapter) |
 | Gateway + approval-gated tools | [agent-gateway-stack](https://github.com/lyftium/agent-gateway-stack) | [Demo](https://github.com/lyftium/agent-gateway-stack/blob/main/docs/DEMO.md) |
 
 ## Selected work
