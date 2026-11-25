@@ -1,6 +1,6 @@
-# Pierre — Data Scientist & AI Engineer
+# Data Scientist & AI Engineer
 
-Paris, France · Français / English · open to CDI / freelance collaboration in FR
+Paris, France · open to CDI / freelance collaboration in FR
 
 I evaluate whether a model or decision policy beats its baseline, then package the surrounding service so another engineer can run and test it. Looking for **data science**, **applied ML**, and **AI integration** roles (services, evaluation, LLM serving).
 
